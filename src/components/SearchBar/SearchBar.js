@@ -1,13 +1,14 @@
 import React from 'react';
 import './SearchBar.css';
 import retrieveWeatherData from './weatherDataRetrieval/weatherDataRetrieval';
+import { useState } from 'react';
 
 
 function SearchBar()
 {
     //The list of tracks, and their weather data, brought back from the 
     //API for that year. The user can then filter down the search, by track
-    const tracks = []; //temporary value
+    const [tracks, setTracks] = useState([]); //temporary value
     
     //Form is not actually submitting, so the values are just set to the options
     //This will populate the track filter dropdown
@@ -19,7 +20,7 @@ function SearchBar()
         <div className="SearchBar">
             <form id="searchCriteria">
                 <div className="inputGroup">
-                    <label>Year:</label>
+                    <label>Year (4 digit format):</label>
                     <input type="text" id="yearInput" name="yearInput" />
                 </div>
                 
