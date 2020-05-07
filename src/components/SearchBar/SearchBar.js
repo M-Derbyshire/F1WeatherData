@@ -35,7 +35,7 @@ function SearchBar()
                 }
                 
                 <div className="inputGroup">
-                    <button type="button" onClick={() => retrieveWeatherData("yearInput", "trackFilterSelector")}>Get Weather Data</button>
+                    <button type="button" onClick={() => retrieveWeatherData("yearInput", "trackFilterSelector", setTracks)}>Get Weather Data</button>
                 </div>
             </form>
         </div>
