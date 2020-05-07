@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # config
-/public/api_keys.json
+/public/api_settings.json
