@@ -19,18 +19,22 @@ function SearchBar()
         (track) => <option key={"trackOption-" + track} value={track}>{track}</option>
     );
     
+    //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
+    const yearInputName = "yearInput";
+    const trackFilterInputName = "trackFilterSelector";
+    
     return (
         <div className="SearchBar">
             <form id="searchCriteria">
                 <div className="inputGroup">
                     <label>Year (4 digit format):</label>
-                    <input type="text" id="yearInput" name="yearInput" />
+                    <input type="text" id={yearInputName} name={yearInputName} />
                 </div>
                 
                 {tracks.length > 0 && //We only want to display this if there are tracks available
                     <div className="inputGroup">
                         <label>Track Filter:</label>
-                        <select id="trackFilterSelector" name="trackFilterSelector">
+                        <select id={trackFilterInputName} name={trackFilterInputName}>
                             <option value="all">All Tracks</option>
                             {trackFilterOptionslist}
                         </select>
@@ -38,7 +42,7 @@ function SearchBar()
                 }
                 
                 <div className="inputGroup">
-                    <button type="button" onClick={() => retrieveWeatherData("yearInput", "trackFilterSelector", apiSettings, setApiSettings, setTracks)}>Get Weather Data</button>
+                    <button type="button" onClick={() => retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, setApiSettings, setTracks)}>Get Weather Data</button>
                 </div>
             </form>
         </div>
