@@ -23,8 +23,10 @@ test("retrieveWeatherData will set the 'tracks' state if given a valid year", as
     
     document.getElementById(yearInput.id).value = "2020";
     document.getElementById(trackInput.id).value = "all";
+    const apiSettings = null;
+    const setApiSettings = (val) => {};
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, setTracks);
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, setTracks);
     
     expect(setTracks).toHaveBeenCalled();
 });
@@ -34,8 +36,10 @@ test("retirieveWeatherData will alert if given a year that is too old", async ()
     const yearValue = "1000"; //Creating here, as used in expect condition
     document.getElementById(yearInput.id).value = yearValue;
     document.getElementById(trackInput.id).value = "all";
+    const apiSettings = null;
+    const setApiSettings = (val) => {};
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, setTracks);
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, setTracks);
     
     expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is too long ago, and the data is not available.");
 });
@@ -45,8 +49,10 @@ test("retirieveWeatherData will alert if given a year that is in the future", as
     const yearValue = "3000"; //Creating here, as used in expect condition
     document.getElementById(yearInput.id).value = yearValue;
     document.getElementById(trackInput.id).value = "all";
+    const apiSettings = null;
+    const setApiSettings = (val) => {};
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, setTracks);
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, setTracks);
     
     expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is in the future.");
 });
@@ -56,8 +62,10 @@ test("retirieveWeatherData will alert if given a year that is in an incorrect fo
     const yearValue = "2K"; //Creating here, as used in expect condition
     document.getElementById(yearInput.id).value = yearValue;
     document.getElementById(trackInput.id).value = "all";
+    const apiSettings = null;
+    const setApiSettings = (val) => {};
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, setTracks);
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, setTracks);
     
     expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is not a valid year input. Please use a 4 digit, YYYY format.");
 });
@@ -66,8 +74,10 @@ test("retirieveWeatherData will alert if given an empty string for the year", as
     
     document.getElementById(yearInput.id).value = "";
     document.getElementById(trackInput.id).value = "all";
+    const apiSettings = null;
+    const setApiSettings = (val) => {};
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, setTracks);
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, setTracks);
     
     expect(window.alert).toHaveBeenCalledWith("Please provide a year to search for.");
 });

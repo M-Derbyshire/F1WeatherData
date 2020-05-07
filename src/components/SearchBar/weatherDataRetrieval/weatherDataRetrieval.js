@@ -1,16 +1,29 @@
 import validateYearInput from './yearInputValidation';
 import loadAPISettings from './loadAPISettings';
 
-async function retrieveWeatherData(yearInputID, trackSelectorID, setTrackList)
+//Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
+//state and set-function; the function to set the trackList state
+async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettings, setApiSettings, setTrackList)
 {
     const year = document.getElementById(yearInputID).value;
     const trackElement = document.getElementById(trackSelectorID); //may return null, if the track list hasn't been generated
     const track = (trackElement === null) ? "all" : trackElement.value;
     
+    //If the apiSettings haven't yet been loaded, load them and update the state.
+    //Otherwise, use the state that was passed in.
+    let apiSettings;
+    if(passedApiSettings === null)
+    {
+        apiSettings = await loadAPISettings();
+        setApiSettings(apiSettings); //Keep the loaded settings for future searches
+    }
+    else
+    {
+        apiSettings = passedApiSettings;
+    }
+    
     try
     {
-        const apiSettings = await loadAPISettings();
-        
         //Validate the year input, and alert the user if it isn't valid
         const validationResult = validateYearInput(year, apiSettings.oldest_year_available);
         

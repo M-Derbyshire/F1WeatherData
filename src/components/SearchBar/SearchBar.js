@@ -6,6 +6,9 @@ import { useState } from 'react';
 
 function SearchBar()
 {
+    //The apiSettings, loaded from api_settings.json
+    const [apiSettings, setApiSettings] = useState(null);
+    
     //The list of tracks, and their weather data, brought back from the 
     //API for that year. The user can then filter down the search, by track
     const [tracks, setTracks] = useState([]); //temporary value
@@ -35,7 +38,7 @@ function SearchBar()
                 }
                 
                 <div className="inputGroup">
-                    <button type="button" onClick={() => retrieveWeatherData("yearInput", "trackFilterSelector", setTracks)}>Get Weather Data</button>
+                    <button type="button" onClick={() => retrieveWeatherData("yearInput", "trackFilterSelector", apiSettings, setApiSettings, setTracks)}>Get Weather Data</button>
                 </div>
             </form>
         </div>
