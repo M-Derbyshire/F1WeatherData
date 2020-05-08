@@ -1,4 +1,18 @@
-async function loadAPISettings(jsonPath = "api_settings.json")
+async function getAPISettings(currentApiSettings, jsonPath = "api_settings.json")
+{
+    //If the apiSettings haven't yet been loaded, load them.
+    //Otherwise, use the state that was passed in.
+    if(currentApiSettings === null)
+    {
+        return await loadAPISettings(jsonPath);
+    }
+    else
+    {
+        return currentApiSettings;
+    }
+}
+
+export async function loadAPISettings(jsonPath)
 {
     const response = await fetch(jsonPath);
     
@@ -19,4 +33,4 @@ async function loadAPISettings(jsonPath = "api_settings.json")
     }
 }
 
-export default loadAPISettings;
+export default getAPISettings;
