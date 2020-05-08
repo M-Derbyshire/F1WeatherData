@@ -47,4 +47,25 @@ function checkDateRange(year, oldestYear)
     return "valid";
 }
 
+export function displayInvalidYearAlert(validationResult, yearValue)
+{
+    switch(validationResult)
+    {
+        //Explanations for all these results can be found in the comments above validateYearInput()
+        case "old":
+            alert("Sorry, " + yearValue + " is too long ago, and the data is not available.");
+            return;
+        case "future":
+            alert("Sorry, " + yearValue + " is in the future.");
+            return;
+        case "empty":
+            alert("Please provide a year to search for.");
+            return;
+        default:
+            //Either this is a badFormat, or a future bug has returned something else that we can catch here.
+            alert("Sorry, " + yearValue + " is not a valid year input. Please use a 4 digit, YYYY format.");
+            return;
+    }
+}
+
 export default validateYearInput;

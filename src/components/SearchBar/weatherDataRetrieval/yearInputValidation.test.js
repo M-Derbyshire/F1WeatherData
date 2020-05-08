@@ -1,5 +1,6 @@
-import validateYearInput from './yearInputValidation';
+import validateYearInput, { displayInvalidYearAlert } from './yearInputValidation';
 
+//validateYearInput()
 test("validateYearInput will return 'empty' is passed empty string", () => {
     const emptyResult = validateYearInput("", 2000);
     expect(emptyResult).toBe("empty");
@@ -38,3 +39,48 @@ test("validateYearInput will return 'valid', if given a valid date", () => {
     const validResult = validateYearInput(d.getFullYear().toString(), 2000);
     expect(validResult).toBe("valid");
 })
+
+
+
+//displayInvalidYearAlert()
+window.alert = jest.fn();
+
+test("displayInvalidYearAlert will alert if the given validation result is 'old'", async () => {
+    
+    const validationResult = "old";
+    const yearValue = "1000"
+    
+    displayInvalidYearAlert(validationResult, yearValue);
+    
+    expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is too long ago, and the data is not available.");
+});
+
+test("displayInvalidYearAlert will alert if the given validation result is 'future'", async () => {
+    
+    const validationResult = "future";
+    const yearValue = "3000"
+    
+    displayInvalidYearAlert(validationResult, yearValue);
+    
+    expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is in the future.");
+});
+
+test("displayInvalidYearAlert will alert if the given validation result is 'badFormat'", async () => {
+    
+    const validationResult = "badFormat";
+    const yearValue = "2k20";
+    
+    displayInvalidYearAlert(validationResult, yearValue);
+    
+    expect(window.alert).toHaveBeenCalledWith("Sorry, " + yearValue + " is not a valid year input. Please use a 4 digit, YYYY format.");
+});
+
+test("displayInvalidYearAlert will alert if the given validation result is 'empty'", async () => {
+    
+    const validationResult = "empty";
+    const yearValue = "";
+    
+    displayInvalidYearAlert(validationResult, yearValue);
+    
+    expect(window.alert).toHaveBeenCalledWith("Please provide a year to search for.");
+});

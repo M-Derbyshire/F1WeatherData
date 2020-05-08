@@ -1,4 +1,4 @@
-import validateYearInput from './yearInputValidation';
+import validateYearInput, { displayInvalidYearAlert } from './yearInputValidation';
 import loadAPISettings from './loadAPISettings';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
@@ -26,25 +26,10 @@ async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettin
     {
         //Validate the year input, and alert the user if it isn't valid
         const validationResult = validateYearInput(year, apiSettings.oldest_year_available);
-        
-        switch(validationResult)
+        if(validationResult !== "valid")
         {
-            //Explanations for all these results can be found in yearInputValidation.js
-            case "valid":
-                break;
-            case "old":
-                alert("Sorry, " + year + " is too long ago, and the data is not available.");
-                return;
-            case "future":
-                alert("Sorry, " + year + " is in the future.");
-                return;
-            case "empty":
-                alert("Please provide a year to search for.");
-                return;
-            default:
-                //Either this is a badFormat, or a future bug has returned something else that we can catch here.
-                alert("Sorry, " + year + " is not a valid year input. Please use a 4 digit, YYYY format.");
-                return;
+            displayInvalidYearAlert(validationResult, year);
+            return;
         }
         
         //Year must be valid if we've reached here, so we can continue
