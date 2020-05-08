@@ -8,7 +8,7 @@
 //"future" - the provided year is in the future
 //"badFormat" - there is another issue with the year
 //"empty" - input is an empty string
-function validateYearInput(year, oldestYear)
+export default function validateYearInput(year, oldestYear)
 {
     if(year === "")
     {
@@ -67,5 +67,3 @@ export function displayInvalidYearAlert(validationResult, yearValue)
             return;
     }
 }
-
-export default validateYearInput;

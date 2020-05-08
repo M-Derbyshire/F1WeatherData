@@ -1,4 +1,4 @@
-async function getAPISettings(currentApiSettings, jsonPath = "api_settings.json")
+export default async function getAPISettings(currentApiSettings, jsonPath = "api_settings.json")
 {
     //If the apiSettings haven't yet been loaded, load them.
     //Otherwise, use the state that was passed in.
@@ -32,5 +32,3 @@ export async function loadAPISettings(jsonPath)
         throw Error("Error while fetching API Settings: " + response.statusText);
     }
 }
-
-export default getAPISettings;

@@ -3,7 +3,7 @@ import getAPISettings from './loadAPISettings';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
 //state (or null if not yet set) and set-function; the function to set the trackList state
-async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettings, setApiSettings, setTrackList)
+export default async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettings, setApiSettings, setTrackList)
 {
     const year = document.getElementById(yearInputID).value;
     const trackElement = document.getElementById(trackSelectorID); //may return null, if the track list hasn't been generated
@@ -31,5 +31,3 @@ async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettin
         return;
     }
 }
-
-export default retrieveWeatherData;
