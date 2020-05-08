@@ -1,5 +1,5 @@
 {
-    "oldest_year_available": "2017",
+    "oldest_year_available": "1980",
     "meteostat_API_key": "your API key for api.meteostat.net",
     "_comment": "Obviously, api_keys.json would be accessible publicly; however, I am using this example file as I don't want the api key in the repo."
 }
