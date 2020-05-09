@@ -34,15 +34,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         
         //Now we need to check we don't already hold the requested year data.
-        let heldMatchingWeatherData = [];
-        for(let i = 0; i < weatherData.length; i++)
-        {
-            if(parseInt(weatherData[i].year) === parseInt(year) && (track === "all" || weatherData[i].circuitId === track))
-            {
-                heldMatchingWeatherData.push(weatherData[i]);
-            }
-        }
-        
+        const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year, track);
         if(heldMatchingWeatherData.length > 0)
         {
             setSearchOutput(heldMatchingWeatherData);
@@ -59,4 +51,21 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         alert("Error while retrieving weather data - " + e);
         return;
     }
+}
+
+
+
+export function getMatchingHeldWeatherData(weatherData, year, track) //exported for tests
+{
+    let heldMatchingWeatherData = [];
+    
+    for(let i = 0; i < weatherData.length; i++)
+    {
+        if(weatherData[i].year === year && (track === "all" || weatherData[i].circuitId === track))
+        {
+            heldMatchingWeatherData.push(weatherData[i]);
+        }
+    }
+    
+    return heldMatchingWeatherData;
 }

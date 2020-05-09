@@ -1,4 +1,4 @@
-import retrieveWeatherData from './weatherDataRetrieval';
+import retrieveWeatherData, { getMatchingHeldWeatherData } from './weatherDataRetrieval';
 import { useState } from 'react';
 
 //Elements/functions to use in tests
@@ -18,6 +18,8 @@ document.body.appendChild(trackInput);
 
 const apiSettings = null;
 const setApiSettings = (val) => {};
+const setWeatherData = (val) => {};
+const setSearchOutput = (val) => {};
 
 
 test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if given a valid year", async () => {
@@ -48,8 +50,6 @@ test("retirieveWeatherData will call displayInvalidYearAlert() if given an incor
     
     document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
     document.getElementById(trackInput.id).value = "all";
-    const setWeatherData = (val) => {};
-    const setSearchOutput = (val) => {};
     window.alert = jest.fn();
     
     
@@ -67,8 +67,6 @@ test("retrieveWeatherData will trigger an alert if there are missing API setting
     
     document.getElementById(yearInput.id).value = "2020";
     document.getElementById(trackInput.id).value = "all";
-    const setWeatherData = (val) => {};
-    const setSearchOutput = (val) => {};
     window.alert = jest.fn();
     
     
@@ -90,43 +88,60 @@ test("retrieveWeatherData will trigger an alert if there are missing API setting
 
 
 
-test("retrieveWeatherData will return any already held data that matches the search criteria", async () => {
+test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherData() returns results", async () => {
     
-    const setWeatherData = (val) => {};
     const settingsJSON = JSON.stringify({
         "oldest_year_available": "2017",
         "meteostat_API_key": ""
     });
     fetch.mockResponse(settingsJSON);
     
-    const setSearchOutput = jest.fn();
+    const mockedSetSearchOutput = jest.fn();
     
     const weatherData = [
-        { year: 2020, circuitId: "100" },
-        { year: 2020, circuitId: "200" },
-        { year: 2021, circuitId: "100" }
+        { year: "2020", circuitId: "100" },
+        { year: "2020", circuitId: "200" },
+        { year: "2021", circuitId: "100" }
+    ];
+    
+    const expectedWeatherData = [
+        { year: "2020", circuitId: "100" },
+        { year: "2020", circuitId: "200" }
     ];
     
     //Get all tracks for 2020 ----------------------------------------
     document.getElementById(yearInput.id).value = "2020";
     document.getElementById(trackInput.id).value = "all";
     
-    const expectedWeatherData1 = [
-        { year: 2020, circuitId: "100" },
-        { year: 2020, circuitId: "200" },
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
+    expect(mockedSetSearchOutput).toHaveBeenCalledWith(expectedWeatherData);
+});
+
+
+test("getMatchingHeldWeatherData will return any already held data that matches the search criteria", () => {
+    const weatherData = [
+        { year: "2020", circuitId: "100" },
+        { year: "2020", circuitId: "200" },
+        { year: "2021", circuitId: "100" }
     ];
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput);
-    expect(setSearchOutput).toHaveBeenCalledWith(expectedWeatherData1);
+    //Get all tracks for 2020 ----------------------------------------
+    const expectedWeatherData1 = [
+        { year: "2020", circuitId: "100" },
+        { year: "2020", circuitId: "200" },
+    ];
+    
+    const result1 = getMatchingHeldWeatherData(weatherData, "2020", "all");
+    expect(result1).toStrictEqual(expectedWeatherData1);
     
     
     //Get only track 100, only for 2020 ----------------------------------------
     document.getElementById(trackInput.id).value = "100";
     
     const expectedWeatherData2 = [
-        { year: 2020, circuitId: "100" }
+        { year: "2020", circuitId: "100" }
     ];
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput);
-    expect(setSearchOutput).toHaveBeenCalledWith(expectedWeatherData2);
+    const result2 = getMatchingHeldWeatherData(weatherData, "2020", "100");
+    expect(result2).toStrictEqual(expectedWeatherData2);
 });
