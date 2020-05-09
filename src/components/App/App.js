@@ -7,10 +7,11 @@ import SearchBar from '../SearchBar/SearchBar';
 function App() {
   
   const [weatherData, setWeatherData] = useState([]);
+  const [searchResultData, setSearchResultData] = useState([]);
   
   return (
     <div className="App">
-      <SearchBar weatherDataState={[weatherData, setWeatherData]} />
+      <SearchBar weatherDataState={[weatherData, setWeatherData]} setSearchOutput={setSearchResultData} />
     </div>
   );
 }

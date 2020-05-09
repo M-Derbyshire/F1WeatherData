@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 // Props: 
 // weatherDataState - array of the state and set-state-function for the weatherData
+// setSearchOutput - set the array of data that will be displayed after a search/filter
 function SearchBar(props)
 {
     //The apiSettings, loaded from api_settings.json
@@ -43,7 +44,7 @@ function SearchBar(props)
                 }
                 
                 <div className="inputGroup">
-                    <button type="button" onClick={() => retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, setApiSettings, setWeatherData)}>Get Weather Data</button>
+                    <button type="button" onClick={() => retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, setApiSettings, weatherData, setWeatherData, props.setSearchOutput)}>Get Weather Data</button>
                 </div>
             </form>
         </div>
