@@ -3,7 +3,8 @@ import './SearchBar.css';
 import retrieveWeatherData from './weatherDataRetrieval/weatherDataRetrieval';
 import { useState } from 'react';
 
-// Props: array of the state and set-state-function for the weatherData
+// Props: 
+// weatherDataState - array of the state and set-state-function for the weatherData
 function SearchBar(props)
 {
     //The apiSettings, loaded from api_settings.json
