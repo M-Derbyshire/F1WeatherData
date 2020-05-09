@@ -20,12 +20,12 @@ const apiSettings = null;
 const setApiSettings = (val) => {};
 
 
-test("retrieveWeatherData will set the 'tracks' state if given a valid year", async () => {
+test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if given a valid year", async () => {
     
     document.getElementById(yearInput.id).value = "2020";
     document.getElementById(trackInput.id).value = "all";
     const setWeatherData = jest.fn();
-    const setSearchOutput = (val) => {};
+    const setSearchOutput = jest.fn();
     
     const settingsJSON = JSON.stringify({
         "oldest_year_available": "2017",
@@ -38,8 +38,8 @@ test("retrieveWeatherData will set the 'tracks' state if given a valid year", as
     await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
     
     
-    
-    expect(setTracks).toHaveBeenCalled();
+    expect(setWeatherData).toHaveBeenCalled();
+    expect(setSearchOutput).toHaveBeenCalled();
 });
 
 
