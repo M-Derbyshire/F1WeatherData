@@ -12,7 +12,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
     try
     {
         //Get and validate the API settings.
-        let apiSettings = await getAPISettings(passedApiSettings);
+        let apiSettings = await getAPISettings(passedApiSettings); //If passedApiSettings is already populated, this will just pass it straight back
         let missingSettings = getMissingAPISettings(apiSettings); //Are any settings missing?
         if(missingSettings.length > 0) 
         {
