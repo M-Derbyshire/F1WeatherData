@@ -14,21 +14,21 @@ export default async function getAPISettings(currentApiSettings, jsonPath = "api
 
 export async function loadAPISettings(jsonPath)
 {
-    const response = await fetch(jsonPath);
-    
-    if(response.ok)
+    try
     {
-        try
+        const response = await fetch(jsonPath);
+        
+        if(response.ok)
         {
             return await response.json();
         }
-        catch(err)
+        else
         {
-            throw Error("Error while parsing settings data: " + err);
+            throw Error(response.statusText);
         }
     }
-    else
+    catch(err)
     {
-        throw Error("Error while fetching API Settings: " + response.statusText);
+        throw Error("Error while fetching settings data: " + err);
     }
 }
