@@ -37,7 +37,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         //If not already held, we need to get the data, and then add it to both the
         //weatherData state, and the searchOutput state.
-        
+        const f1DataOnly = retrieveF1DataObject(year);
         
     }
     catch(e)
@@ -62,4 +62,45 @@ export function getMatchingHeldWeatherData(weatherData, year, track) //exported 
     }
     
     return heldMatchingWeatherData;
+}
+
+
+export async function retrieveF1DataObject(year)
+{
+    let response = await fetch(`http://ergast.com/api/f1/${year}/races.json`);
+    
+    if(response.ok)
+    {
+        try
+        {
+            let allF1Data = await response.json();
+    
+            //Don't need all data, just certain elements
+            let requiredF1Data = allF1Data.MRData.RaceTable.Races.map((race) => {
+                return {
+                    year: year,
+                    circuitId: race.Circuit.circuitId,
+                    circuitName: race.Circuit.circuitName,
+                    raceName: race.raceName,
+                    round: race.round,
+                    locality: race.Circuit.Location.locality,
+                    country: race.Circuit.Location.country,
+                    lat: race.Circuit.Location.lat,
+                    long: race.Circuit.Location.long,
+                    raceDate: race.date,
+                    raceTime: race.time //Returned as UTC, so has 'Z' suffix
+                };
+            });
+            
+            return requiredF1Data;
+        }
+        catch(e)
+        {
+            throw Error("Error while parsing F1 data: " + err);
+        }
+    }
+    else
+    {
+        throw Error("Error while fetching F1 Data: " + response.statusText);
+    }
 }
