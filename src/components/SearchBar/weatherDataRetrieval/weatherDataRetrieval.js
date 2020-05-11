@@ -37,7 +37,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         //If not already held, we need to get the data, and then add it to both the
         //weatherData state, and the searchOutput state.
-        const f1DataOnly = retrieveF1DataObject(year);
+        const f1DataOnly = await retrieveF1DataObject(year);
         
     }
     catch(e)
@@ -67,11 +67,11 @@ export function getMatchingHeldWeatherData(weatherData, year, track) //exported 
 
 export async function retrieveF1DataObject(year)
 {
-    let response = await fetch(`http://ergast.com/api/f1/${year}/races.json`);
-    
-    if(response.ok)
+    try
     {
-        try
+        let response = await fetch(`http://ergast1.com/api/f1/${year}/races.json`);
+        
+        if(response.ok)
         {
             let allF1Data = await response.json();
     
@@ -94,13 +94,14 @@ export async function retrieveF1DataObject(year)
             
             return requiredF1Data;
         }
-        catch(e)
+        else
         {
-            throw Error("Error while parsing F1 data: " + e);
+            throw Error(response.statusText);
         }
     }
-    else
+    catch(e)
     {
-        throw Error("Error while fetching F1 Data: " + response.statusText);
+        throw Error("Error while fetching F1 data: " + e);
     }
+    
 }

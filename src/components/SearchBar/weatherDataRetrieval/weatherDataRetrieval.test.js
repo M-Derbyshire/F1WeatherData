@@ -178,7 +178,7 @@ test("retrieveF1DataObject will throw an exception if recieving bad JSON", async
 });
 
 test("retrieveF1DataObject will throw an error if it cannot get a response", async () => {
-    fetch.mockReject(new Error('Failed fetch attempt'));
+    fetch.mockAbortOnce();
     const year = 2008;
     
     await expect(retrieveF1DataObject(year)).rejects.toThrow();
