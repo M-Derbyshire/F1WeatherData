@@ -32,20 +32,3 @@ export async function loadAPISettings(jsonPath)
         throw Error("Error while fetching API Settings: " + response.statusText);
     }
 }
-
-export function getMissingAPISettings(apiSettings)
-{
-    const expectedSettingsNames = [
-        "meteostat_API_key",
-        "oldest_year_available"
-    ];
-    
-    const givenSettingsNames = Object.getOwnPropertyNames(apiSettings);
-    let missingSettingsNames = [];
-    
-    expectedSettingsNames.forEach((setting) => {
-        if(!givenSettingsNames.includes(setting)) missingSettingsNames.push(setting);
-    });
-    
-    return missingSettingsNames;
-}

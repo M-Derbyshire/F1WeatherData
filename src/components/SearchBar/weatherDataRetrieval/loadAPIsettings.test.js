@@ -1,4 +1,4 @@
-import getAPISettings, { loadAPISettings, getMissingAPISettings } from './loadAPISettings';
+import getAPISettings, { loadAPISettings } from './loadAPISettings';
 
 const validJSON = JSON.stringify({ testProp: "testing" });
 const badJSON = "{ badJSONhere }";
@@ -39,15 +39,4 @@ test("loadAPISettings will throw an error if it cannot get a response", async ()
     fetch.disableMocks();
     
     await expect(loadAPISettings("http://non-existant-site/api")).rejects.toThrow();
-});
-
-test("getMissingAPISettings will return a list of settings that are missing from the settings object", () => {
-    const emptySettings = {};
-    const settingsMissing = { meteostat_API_key: "000000"};
-    
-    const emptyResults = getMissingAPISettings(emptySettings);
-    const missingResults = getMissingAPISettings(settingsMissing);
-    
-    expect(emptyResults.length).toBeGreaterThan(1);
-    expect(missingResults.length).toBeGreaterThan(0);
 });

@@ -63,31 +63,6 @@ test("retirieveWeatherData will call displayInvalidYearAlert() if given an incor
 
 
 
-test("retrieveWeatherData will trigger an alert if there are missing API settings", async () => {
-    
-    document.getElementById(yearInput.id).value = "2020";
-    document.getElementById(trackInput.id).value = "all";
-    window.alert = jest.fn();
-    
-    
-    const settingsJSON = JSON.stringify({
-        "oldest_year_available": "2017",
-        "meteostat_API_key": ""
-    });
-    fetch.mockResponse(settingsJSON);
-    
-    
-    //Missing the API key
-    await retrieveWeatherData(yearInput.id, trackInput.id, { 
-        oldest_year_available: "2017" 
-    }, setApiSettings, {}, setWeatherData, setSearchOutput);
-    
-    
-    expect(window.alert).toHaveBeenCalled();
-});
-
-
-
 test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherData() returns results", async () => {
     
     const settingsJSON = JSON.stringify({

@@ -1,5 +1,5 @@
 import validateYearInput, { displayInvalidYearAlert } from './yearInputValidation';
-import getAPISettings, { getMissingAPISettings } from './loadAPISettings';
+import getAPISettings from './loadAPISettings';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
 //state (or null if not yet set) and set-function; the function to set the trackList state
@@ -13,12 +13,6 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
     {
         //Get and validate the API settings.
         let apiSettings = await getAPISettings(passedApiSettings); //If passedApiSettings is already populated, this will just pass it straight back
-        let missingSettings = getMissingAPISettings(apiSettings); //Are any settings missing?
-        if(missingSettings.length > 0) 
-        {
-            // Spaces wouldn't be added after commas with .toString()
-            throw Error("Missing API Settings: " + missingSettings.join(", ") + ".");
-        }
         setApiSettings(apiSettings); //Finally, keep the loaded settings for future searches
         
         
