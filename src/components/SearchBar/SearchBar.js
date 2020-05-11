@@ -18,7 +18,7 @@ function SearchBar(props)
     //Form is not actually submitting, so the values are just set to the options
     //This will populate the track filter dropdown
     const trackFilterOptionslist = weatherData.map(
-        (track) => <option key={"trackOption-" + track} value={track}>{track}</option>
+        (track) => <option key={"trackOption-" + track.raceDate} value={track.circuitId}>{track.circuitName}</option>
     );
     
     //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
