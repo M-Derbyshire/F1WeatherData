@@ -96,7 +96,7 @@ export async function retrieveF1DataObject(year)
         }
         catch(e)
         {
-            throw Error("Error while parsing F1 data: " + err);
+            throw Error("Error while parsing F1 data: " + e);
         }
     }
     else
