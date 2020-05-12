@@ -80,7 +80,7 @@ export async function retrieveF1DataObject(year)
 {
     try
     {
-        let response = await fetch(`http://ergast1.com/api/f1/${year}/races.json`);
+        let response = await fetch(`http://ergast.com/api/f1/${year}/races.json`);
         
         if(response.ok)
         {
