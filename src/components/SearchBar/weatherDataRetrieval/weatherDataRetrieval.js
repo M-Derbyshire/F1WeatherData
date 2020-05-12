@@ -39,6 +39,17 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         //weatherData state, and the searchOutput state.
         const f1DataOnly = await retrieveF1DataObject(year);
         
+        //Even though tracks can be used multiple times in a season,
+        //there may be a newer weather station part way through the
+        //year, so we are checking on every race's record.
+        const f1DataWithStations = await Promise.all(f1DataOnly.map(async (race) => {
+            return {
+                ...race,
+                stationID: await retrieveWeatherStationID(race.lat, race.long, apiSettings.meteostat_API_key)
+            };
+        }));
+        
+        
     }
     catch(e)
     {
@@ -103,5 +114,28 @@ export async function retrieveF1DataObject(year)
     {
         throw Error("Error while fetching F1 data: " + e);
     }
-    
+}
+
+export async function retrieveWeatherStationID(lat, long, apiKey)
+{
+    try
+    {
+        //We are limiting the station list to 1 result, as the api provides them in order of distance,
+        //so the first will be the closest.
+        let response = await fetch(`https://api.meteostat.net/v1/stations/nearby?lat=${lat}&lon=${long}&limit=1&key=${apiKey}`);
+        
+        if(response.ok)
+        {
+            const stationData = await response.json();
+            return stationData.data[0].id;
+        }
+        else
+        {
+            throw Error(response.statusText);
+        }
+    }
+    catch(e)
+    {
+        throw Error("Error while fetching weather station data: " + e);
+    }
 }

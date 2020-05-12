@@ -1,4 +1,4 @@
-import retrieveWeatherData, { getMatchingHeldWeatherData, retrieveF1DataObject } from './weatherDataRetrieval';
+import retrieveWeatherData, { getMatchingHeldWeatherData, retrieveF1DataObject, retrieveWeatherStationID } from './weatherDataRetrieval';
 import { useState } from 'react';
 
 //Elements/functions to use in tests
@@ -182,4 +182,25 @@ test("retrieveF1DataObject will throw an error if it cannot get a response", asy
     const year = 2008;
     
     await expect(retrieveF1DataObject(year)).rejects.toThrow();
+});
+
+test("retrieveWeatherStationID will return the weather station ID from the API", async () => {
+    fetch.resetMocks();
+    
+    fetch.mockResponseOnce(JSON.stringify({
+        meta: {
+            source: "National Oceanic and Atmospheric Administration, Deutscher Wetterdienst"
+        },
+        data:[
+            {
+                id: "94868",
+                name: "Melbourne",
+                distance: "2.3"
+            }
+        ]
+    }));
+    
+    const result = await retrieveWeatherStationID(0, 0, "mockedAPI");
+    
+    await expect(result).toBe("94868");
 });
