@@ -26,17 +26,3 @@ test("getAPISettings will return the passed settings, if passed a settings objec
     expect(result.hasOwnProperty("loadedProp")).toBeTruthy();
     expect(result.loadedProp).toBe("loadedTest");
 });
-
-test("loadAPISettings will throw an exception if recieving bad JSON", async () => {
-    fetch.resetMocks();
-    
-    fetch.mockResponseOnce(badJSON);
-    
-    await expect(loadAPISettings(settingsPath)).rejects.toThrow();
-});
-
-test("loadAPISettings will throw an error if it cannot get a response", async () => {
-    fetch.disableMocks();
-    
-    await expect(loadAPISettings("http://non-existant-site/api")).rejects.toThrow();
-});

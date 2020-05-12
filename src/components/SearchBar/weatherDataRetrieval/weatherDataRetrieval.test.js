@@ -168,21 +168,6 @@ test("retrieveF1DataObject will return an array of objects with the required dat
 });
 
 
-test("retrieveF1DataObject will throw an exception if recieving bad JSON", async () => {
-    fetch.resetMocks();
-    
-    fetch.mockResponseOnce(JSON.stringify({ badJSON: "test" }));
-    const year = 2008;
-    
-    await expect(retrieveF1DataObject(2008)).rejects.toThrow();
-});
-
-test("retrieveF1DataObject will throw an error if it cannot get a response", async () => {
-    fetch.mockAbortOnce();
-    const year = 2008;
-    
-    await expect(retrieveF1DataObject(year)).rejects.toThrow();
-});
 
 test("retrieveWeatherStationID will return the weather station ID from the API", async () => {
     fetch.resetMocks();
