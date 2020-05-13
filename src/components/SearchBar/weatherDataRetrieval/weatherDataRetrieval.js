@@ -16,7 +16,6 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         setApiSettings(apiSettings); //Finally, keep the loaded settings for future searches
         
         
-        
         //Validate the year input, and alert the user if it isn't valid
         const validationResult = validateYearInput(year, apiSettings.oldest_year_available);
         if(validationResult !== "valid")
@@ -49,19 +48,25 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
             };
         }));
         
-        const f1WeatherData = await Promise.all(f1DataWithStations.map(async (race) => {
+        const newF1WeatherData = await Promise.all(f1DataWithStations.map(async (race) => {
             
             //Will return null if there is no weather data found.
             //(Returns null instead of an empty object, as that's actually recieved as undefined.)
-            weatherData = await retrieveWeatherByStationAndDate(race.stationID, race.raceDate, apiSettings.meteostat_API_key);
+            const raceWeatherData = await retrieveWeatherByStationAndDate(race.stationID, race.raceDate, apiSettings.meteostat_API_key);
             
             return {
                 ...race,
-                weather: (weatherData !== null) ? weatherData : {} //Return empty object if no data
+                weather: (raceWeatherData !== null) ? raceWeatherData : {} //Return empty object if no data
             }
         }));
         
+        //Finally, set the weatherData and searchOutput
+        setWeatherData([
+            ...weatherData,
+            newF1WeatherData
+        ]);
         
+        setSearchOutput(newF1WeatherData);
     }
     catch(e)
     {
