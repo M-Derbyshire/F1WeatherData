@@ -63,7 +63,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         //Finally, set the weatherData and searchOutput
         setWeatherData([
             ...weatherData,
-            newF1WeatherData
+            ...newF1WeatherData
         ]);
         
         setSearchOutput(newF1WeatherData);
