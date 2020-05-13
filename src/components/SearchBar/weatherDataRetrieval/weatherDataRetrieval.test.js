@@ -132,6 +132,7 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
 
 
 
+
 test("retirieveWeatherData will call displayInvalidYearAlert() if given an incorrect year value", async () => {
     
     document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
