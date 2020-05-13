@@ -1,4 +1,4 @@
-import getAPISettings, { loadAPISettings } from './loadAPISettings';
+import getAPISettings, { loadAPISettings } from './getAPISettings';
 
 const validJSON = JSON.stringify({ testProp: "testing" });
 const badJSON = "{ badJSONhere }";
