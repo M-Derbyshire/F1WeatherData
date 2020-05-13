@@ -49,6 +49,18 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
             };
         }));
         
+        const f1WeatherData = await Promise.all(f1DataWithStations.map(async (race) => {
+            
+            //Will return null if there is no weather data found.
+            //(Returns null instead of an empty object, as that's actually recieved as undefined.)
+            weatherData = await retrieveWeatherByStationAndDate(race.stationID, race.raceDate, apiSettings.meteostat_API_key);
+            
+            return {
+                ...race,
+                weather: (weatherData !== null) ? weatherData : {} //Return empty object if no data
+            }
+        }));
+        
         
     }
     catch(e)
@@ -57,6 +69,11 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         return;
     }
 }
+
+
+
+
+
 
 
 
@@ -74,6 +91,10 @@ export function getMatchingHeldWeatherData(weatherData, year, track) //exported 
     
     return heldMatchingWeatherData;
 }
+
+
+
+
 
 
 export async function retrieveF1DataObject(year)
@@ -116,6 +137,11 @@ export async function retrieveF1DataObject(year)
     }
 }
 
+
+
+
+
+
 export async function retrieveWeatherStationID(lat, long, apiKey)
 {
     try
@@ -137,5 +163,35 @@ export async function retrieveWeatherStationID(lat, long, apiKey)
     catch(e)
     {
         throw Error("Error while fetching weather station data: " + e);
+    }
+}
+
+
+
+//The date is in a YYYY-MM-DD format.
+export async function retrieveWeatherByStationAndDate(stationID, raceDate, apiKey)
+{
+    try
+    {
+        //This will return data for the provided date.
+        let response = await fetch(`https://api.meteostat.net/v1/history/daily?station=${stationID}&start=${raceDate}&end=${raceDate}&key=${apiKey}`);
+        
+        if(response.ok)
+        {
+            const weatherData = await response.json();
+            
+            //If no record is found, return null.
+            //The display components will need to handle the data not being available.
+            //If we return an empty object from here, it will just be recieved as undefined, so returning null.
+            return (weatherData.data.length === 0) ? null : weatherData.data[0];
+        }
+        else
+        {
+            throw Error(response.statusText);
+        }
+    }
+    catch(e)
+    {
+        throw Error("Error while fetching weather data: " + e);
     }
 }
