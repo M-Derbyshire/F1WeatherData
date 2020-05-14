@@ -4,6 +4,7 @@ import getAPISettings from './seperateDataRetrievers/getAPISettings';
 import retrieveF1DataObject from './seperateDataRetrievers/retrieveF1DataObject';
 import retrieveWeatherStationID from './seperateDataRetrievers/retrieveWeatherStationID';
 import retrieveWeatherByStationAndDate from './seperateDataRetrievers/retrieveWeatherByStationAndDate';
+import getErrorDataObject from './getErrorDataObject';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
 //state (or null if not yet set) and set-function; the function to set the trackList state
@@ -74,7 +75,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
     }
     catch(e)
     {
-        alert("Error while retrieving weather data - " + e);
+        setSearchOutput([getErrorDataObject("Error while retrieving weather data - " + e, true)]);
         return;
     }
 }

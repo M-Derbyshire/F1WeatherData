@@ -1,5 +1,4 @@
 import retrieveWeatherData from './weatherDataRetrieval';
-import { useState } from 'react';
 
 //Elements/functions to use in tests
 let yearInput = document.createElement("input");
@@ -172,4 +171,27 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
     
     await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
     expect(mockedSetSearchOutput).toHaveBeenCalledWith(expectedWeatherData);
+});
+
+
+
+test("retrieveWeatherData will set the searchOutput to an array with an error object, when throwing an exception", async () => {
+    
+    const throwWhenSettingAPISettings = (val) => {
+        throw new Error("Test Exception");
+    }
+    
+    let searchOutput = [];
+    const setSearchOutputWithErrorObject = (val) => {
+        searchOutput = val;
+    };
+    
+    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    
+    
+    expect(searchOutput.length).toBe(1);
+    expect(searchOutput[0]).toHaveProperty("error");
+    expect(searchOutput[0].error).toContain("Test Exception");
+    expect(searchOutput[0]).toHaveProperty("isException");
+    expect(searchOutput[0].isException).toEqual(true);
 });
