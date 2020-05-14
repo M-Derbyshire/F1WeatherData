@@ -61,7 +61,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         const newF1WeatherData = await Promise.all(f1DataWithStations.map(async (race) => {
             
-            //Will return null if there is no weather data found.
+            //Will return null if there is no weather data found, or if the provided stationID is an empty string.
             //(Returns null instead of an empty object, as that's actually recieved as undefined.)
             const raceWeatherData = await retrieveWeatherByStationAndDate(race.stationID, race.raceDate, apiSettings.meteostat_API_key);
             

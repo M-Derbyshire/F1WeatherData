@@ -1,6 +1,9 @@
 //The date is in a YYYY-MM-DD format.
 export default async function retrieveWeatherByStationAndDate(stationID, raceDate, apiKey)
 {
+    //If given a blank string as the weatherID (so no weatherID found), return null
+    if(stationID === "") return null;
+    
     try
     {
         //This will return data for the provided date.

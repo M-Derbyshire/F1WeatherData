@@ -54,3 +54,15 @@ test("retrieveWeatherByStationAndDate will return null if there is no weather da
     
     await expect(result).toBeNull();
 });
+
+
+
+test("retrieveWeatherByStationAndDate will return null if the given stationID is a blank string", async () => {
+    
+    const date = "2008-06-22";
+    
+    const result = await retrieveWeatherByStationAndDate("", date, "test"); //Empty station ID string 
+    
+    await expect(result).toBeNull();
+    
+});
