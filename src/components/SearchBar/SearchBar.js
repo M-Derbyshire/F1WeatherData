@@ -15,8 +15,11 @@ function SearchBar(props)
     //API for that year. The user can then filter down the search, by track
     const [weatherData, setWeatherData] = props.weatherDataState;
     
+    //The data returned from the last search/filter (not the full list of loaded data)
+    const [searchResultData, setSearchResultData] = props.setSearchResultState;
+    
     //This will populate the track filter dropdown
-    const trackFilterOptionslist = weatherData.map(
+    const trackFilterOptionslist = searchResultData.map(
         (track) => <option key={"trackOption-" + track.raceDate} value={track.circuitId}>{track.circuitName}</option>
     );
     
@@ -45,7 +48,7 @@ function SearchBar(props)
                 <div className="inputGroup">
                     <button type="button" onClick={ async () => {
                         retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, 
-                                setApiSettings, weatherData, setWeatherData, props.setSearchOutput);
+                                setApiSettings, weatherData, setWeatherData, setSearchResultData);
                         } }>Get Weather Data</button>
                 </div>
             </form>
