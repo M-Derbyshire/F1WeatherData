@@ -20,3 +20,21 @@ test("retrieveWeatherStationID will return the weather station ID from the API",
     
     await expect(result).toBe("94868");
 });
+
+
+test("retrieveWeatherStationID will return an empty string if it doesn't recieve station data from the API", async () => {
+    
+    fetch.resetMocks();
+    
+    fetch.mockResponseOnce(JSON.stringify({
+        meta: {
+            source: "National Oceanic and Atmospheric Administration, Deutscher Wetterdienst"
+        },
+        data:[]
+    }));
+    
+    const result = await retrieveWeatherStationID(0, 0, "mockedAPI");
+    
+    await expect(result).toBe("");
+    
+});

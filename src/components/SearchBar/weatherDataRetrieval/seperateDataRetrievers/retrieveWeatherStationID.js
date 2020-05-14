@@ -9,7 +9,9 @@ export default async function retrieveWeatherStationID(lat, long, apiKey)
         if(response.ok)
         {
             const stationData = await response.json();
-            return stationData.data[0].id;
+            
+            //We should always get a result, but just in case, return an empty string
+            return (stationData.data.length === 0 ) ? "" : stationData.data[0].id;
         }
         else
         {
