@@ -132,6 +132,10 @@ test("retirieveWeatherData will call displayInvalidYearAlert() if given an incor
     document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
     document.getElementById(trackInput.id).value = "all";
     window.alert = jest.fn();
+    fetch.mockResponseOnce(JSON.stringify({
+        "oldest_year_available": "1980",
+        "meteostat_API_key": "test"
+    }));
     
     
     
