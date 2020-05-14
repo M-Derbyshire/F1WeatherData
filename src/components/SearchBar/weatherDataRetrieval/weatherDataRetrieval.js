@@ -41,7 +41,13 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         //If not already held, we need to get the data, and then add it to both the
         //weatherData state, and the searchOutput state.
-        const f1DataOnly = await retrieveF1DataObject(year);
+        const f1DataOnly = await retrieveF1DataObject(year); //This will return an empty array if it finds no races
+        if(f1DataOnly.length === 0)
+        {
+            setSearchOutput([getErrorDataObject("No race data available for this year.", false)]);
+            return;
+        }
+        
         
         //Even though tracks can be used multiple times in a season,
         //there may be a newer weather station part way through the

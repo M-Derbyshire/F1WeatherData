@@ -179,6 +179,8 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
 
 
 
+
+
 test("retrieveWeatherData will set the searchOutput to an array with an error object, when throwing an exception", async () => {
     
     const throwWhenSettingAPISettings = (val) => {
@@ -197,5 +199,49 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
     expect(searchOutput[0]).toHaveProperty("error");
     expect(searchOutput[0].error).toContain("Test Exception");
     expect(searchOutput[0]).toHaveProperty("isException");
-    expect(searchOutput[0].isException).toEqual(true);
+    expect(searchOutput[0].isException).toBeTruthy();
+});
+
+
+
+
+
+test("retrieveWeatherData will set the searchOutput to an array with an error message object, if there is no F1 data available", async () => {
+    
+    document.getElementById(yearInput.id).value = "2020"; //Invalid year input
+    document.getElementById(trackInput.id).value = "all";
+    
+    fetch.resetMocks();
+    
+    const preLoadedApiSettings = JSON.stringify({ //Settings JSON
+        oldest_year_available: "1980",
+        meteostat_API_key: ""
+    })
+    
+    fetch.mockResponseOnce(JSON.stringify({
+        MRData:{
+            xmlns:"http:\/\/ergast.com\/mrd\/1.4", 
+            series:"f1",
+            url:"http://ergast.com/api/f1/1930/races.json",
+            limit:"30",
+            offset:"0",
+            total:"0",
+            RaceTable:{season:"1930",Races:[]}
+        }
+    }));
+    
+    let searchOutput = [];
+    const setSearchOutputWithErrorObject = (val) => {
+        searchOutput = val;
+    };
+    
+    
+    
+    await retrieveWeatherData(yearInput.id, trackInput.id, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    
+    
+    expect(searchOutput.length).toBe(1);
+    expect(searchOutput[0]).toHaveProperty("error");
+    expect(searchOutput[0]).toHaveProperty("isException");
+    expect(searchOutput[0].isException).toBeFalsy();
 });
