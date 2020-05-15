@@ -27,7 +27,7 @@ export default function validateYearInput(year, oldestYear)
 
 function isFormatIncorrect(year)
 {
-    return (year.length != 4 || isNaN(year));
+    return (year.length !== 4 || isNaN(year));
 }
 
 //The passed data expects a string, however it must be 
