@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 // Props: 
 // weatherDataState - array of the state and set-state-function for the weatherData
-// setSearchOutput - set the array of data that will be displayed after a search/filter
+// searchResultState - array of the state and set-state-function for the displayed data after a search/filter
 function SearchBar(props)
 {
     //The apiSettings, loaded from api_settings.json
@@ -16,7 +16,7 @@ function SearchBar(props)
     const [weatherData, setWeatherData] = props.weatherDataState;
     
     //The data returned from the last search/filter (not the full list of loaded data)
-    const [searchResultData, setSearchResultData] = props.setSearchResultState;
+    const [searchResultData, setSearchResultData] = props.searchResultState;
     
     //This will populate the track filter dropdown
     const trackFilterOptionslist = searchResultData.map(

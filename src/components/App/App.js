@@ -11,7 +11,7 @@ function App() {
   
   return (
     <div className="App">
-      <SearchBar weatherDataState={[weatherData, setWeatherData]} setSearchResultState={[searchResultData, setSearchResultData]} />
+      <SearchBar weatherDataState={[weatherData, setWeatherData]} searchResultState={[searchResultData, setSearchResultData]} />
     </div>
   );
 }
