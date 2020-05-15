@@ -15,7 +15,7 @@ function App() {
       <SearchBar 
         weatherDataState={[weatherData, setWeatherData]} 
         searchResultState={[searchResultData, setSearchResultData]} 
-        isRetrievingDataState={[isRetrievingData, setIsRetrievingData]}
+        setIsRetrievingDataState={setIsRetrievingData}
       />
     </div>
   );

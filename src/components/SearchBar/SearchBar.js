@@ -6,8 +6,8 @@ import { useState } from 'react';
 // Props: 
 // weatherDataState - array of the state and set-state-function for the weatherData
 // searchResultState - array of the state and set-state-function for the displayed data after a search/filter
-// isRetrievingDataState - array of the state and set-state-function for a bool value, to be made true when 
-//      the retrieval is running, and false when it is complete.
+// setIsRetrievingDataState - set-state-function for a bool value, to be made true when the retrieval is running, 
+//      and false when it is complete.
 function SearchBar(props)
 {
     //The apiSettings, loaded from api_settings.json
@@ -20,9 +20,6 @@ function SearchBar(props)
     //The data returned from the last search/filter (not the full list of loaded data)
     const [searchResultData, setSearchResultData] = props.searchResultState;
     
-    //Is this currently retrieving data? Bool value.
-    const [isRetrievingData, setIsRetrievingData] = props.isRetrievingDataState;
-    
     //This will populate the track filter dropdown
     const trackFilterOptionslist = searchResultData.map(
         (track) => <option key={"trackOption-" + track.raceDate} value={track.circuitId}>{track.circuitName}</option>
@@ -34,9 +31,9 @@ function SearchBar(props)
     
     //The closure to call when the search button is pressed
     const runSearch = async () => {
-        setIsRetrievingData(true);
+        props.setIsRetrievingDataState(true);
         await retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
-        setIsRetrievingData(false);
+        props.setIsRetrievingDataState(false);
     }
     
     return (
