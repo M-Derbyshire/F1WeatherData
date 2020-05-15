@@ -8,10 +8,15 @@ function App() {
   
   const [weatherData, setWeatherData] = useState([]);
   const [searchResultData, setSearchResultData] = useState([]);
+  const [isRetrievingData, setIsRetrievingData] = useState(false);
   
   return (
     <div className="App">
-      <SearchBar weatherDataState={[weatherData, setWeatherData]} searchResultState={[searchResultData, setSearchResultData]} />
+      <SearchBar 
+        weatherDataState={[weatherData, setWeatherData]} 
+        searchResultState={[searchResultData, setSearchResultData]} 
+        isRetrievingDataState={[isRetrievingData, setIsRetrievingData]}
+      />
     </div>
   );
 }
