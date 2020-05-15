@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
+import APIReferences from '../APIReferences/APIReferences';
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
         searchResultState={[searchResultData, setSearchResultData]} 
         setIsRetrievingDataState={setIsRetrievingData}
       />
+      
+      <APIReferences />
     </div>
   );
 }

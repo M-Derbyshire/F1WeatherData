@@ -1,0 +1,14 @@
+.APIReferences {
+    margin: 0.5em;
+    padding: 0.5em;
+    background-color: #eeeeee;
+    border-radius: 1em;
+    border: 2px solid #aaaaaa;
+    max-width: 45em;
+}
+
+.APIReferences .APIReference {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    font-size: 0.75em;
+}
