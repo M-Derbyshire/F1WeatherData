@@ -52,24 +52,38 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         //Even though tracks can be used multiple times in a season,
         //there may be a newer weather station part way through the
         //year, so we are checking on every race's record.
-        const f1DataWithStations = await Promise.all(f1DataOnly.map(async (race) => {
-            return {
-                ...race,
-                stationID: await retrieveWeatherStationID(race.lat, race.long, apiSettings.meteostat_API_key)
-            };
-        }));
+        const f1DataWithStations = []; 
+        for(let i = 0; i < f1DataOnly.length; i++)
+        {
+            //Originally used a map function to do this. However,
+            //we were getting 403 forbidden errors from the weather API,
+            //so we want to do this in a way where each request is made
+            //one at a time.
+            
+            f1DataWithStations.push({
+                ...f1DataOnly[i],
+                stationID: await retrieveWeatherStationID(f1DataOnly[i].lat, f1DataOnly[i].long, apiSettings.meteostat_API_key)
+            });
+        }
         
-        const newF1WeatherData = await Promise.all(f1DataWithStations.map(async (race) => {
+        let newF1WeatherData = [];
+        for(let i = 0; i < f1DataWithStations.length; i++)
+        {
+            //Originally used a map function to do this. However,
+            //we were getting 403 forbidden errors from the weather API,
+            //so we want to do this in a way where each request is made
+            //one at a time.
             
             //Will return null if there is no weather data found, or if the provided stationID is an empty string.
             //(Returns null instead of an empty object, as that's actually recieved as undefined.)
-            const raceWeatherData = await retrieveWeatherByStationAndDate(race.stationID, race.raceDate, apiSettings.meteostat_API_key);
+            const raceWeatherData = await retrieveWeatherByStationAndDate(f1DataWithStations[i].stationID, 
+                f1DataWithStations[i].raceDate, apiSettings.meteostat_API_key);
             
-            return {
-                ...race,
+            newF1WeatherData.push({
+                ...f1DataWithStations[i],
                 weather: (raceWeatherData !== null) ? raceWeatherData : {} //Return empty object if no data
-            }
-        }));
+            });
+        }
         
         //Finally, set the weatherData and searchOutput
         setWeatherData([
