@@ -41,7 +41,7 @@ function SearchBar(props)
             <form id="searchCriteria">
                 <div className="inputGroup">
                     <label>Year (4 digit format):</label>
-                    <input type="text" id={yearInputName} name={yearInputName} />
+                    <input type="text" id={yearInputName} name={yearInputName} size="4" maxLength="4" />
                 </div>
                 
                 {trackFilterOptionslist.length > 0 && //We only want to display this if there are tracks available
