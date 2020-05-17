@@ -9,6 +9,11 @@ function RaceWeatherResult(props)
     const race = props.raceAndWeatherData;
     const weather = race.weather;
     
+    //We want to display the date in DD/MM/YYYY, rather than YYYY-MM-DD.
+    //Using www.npmjs.com/package/dateformat
+    const dateFormat = require("dateformat");
+    const formattedRaceDate = dateFormat(race.raceDate, "dd/mm/yyyy");
+    
     //Array of the different values the weather API provides.
     //label (the name to display); key (the property name in the API result); units (the unit of measurement)
     //Add any new ones here.
@@ -53,7 +58,7 @@ function RaceWeatherResult(props)
     
     return (
         <div className="RaceWeatherResult">
-            <h1>{race.raceName} <span className="raceDate">({race.raceDate})</span></h1>
+            <h1>{race.raceName} <span className="raceDate">({formattedRaceDate})</span></h1>
             <h2>{race.circuitName}</h2>
             <h3>{race.locality}, {race.country}</h3>
             {weatherStats}
