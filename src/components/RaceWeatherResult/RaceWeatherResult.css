@@ -1,0 +1,29 @@
+.RaceWeatherResult {
+    border: 2px solid black;
+    border-radius: 1em;
+    padding: 0.5em;
+    margin: 0.5em;
+    background-color: #eeeeee;
+}
+
+.RaceWeatherResult h1, .RaceWeatherResult h2, .RaceWeatherResult h3 {
+    margin: 0.5em 0;
+}
+
+.RaceWeatherResult .raceDate {
+    font-weight: 500;
+}
+
+.weatherStatContainer {
+    margin: 1em 0.5em;
+    padding: 0.25em 0.5em;
+    border-radius: 1em;
+    border: 1px solid black;
+}
+
+.noWeatherAvailableMessage {
+    /* Center the text within its parent */
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}

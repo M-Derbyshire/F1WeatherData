@@ -1,0 +1,10 @@
+.WeatherStat {
+    display: inline-block;
+    margin: 0.1em;
+    padding: 0.25em;
+    border: 1px solid black
+}
+
+.WeatherStat .statName {
+    font-weight: bold;
+}
