@@ -8,11 +8,9 @@ import getErrorDataObject from './getErrorDataObject';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
 //state (or null if not yet set) and set-function; the function to set the trackList state
-export default async function retrieveWeatherData(yearInputID, trackSelectorID, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
+export default async function retrieveWeatherData(yearInputID, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
 {
     const year = document.getElementById(yearInputID).value;
-    const trackElement = document.getElementById(trackSelectorID); //may return null, if the track list hasn't been generated
-    const track = (trackElement === null) ? "all" : trackElement.value;
     
     try
     {
@@ -32,7 +30,7 @@ export default async function retrieveWeatherData(yearInputID, trackSelectorID, 
         
         
         //Now we need to check we don't already hold the requested year data.
-        const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year, track);
+        const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year);
         if(heldMatchingWeatherData.length > 0)
         {
             setSearchOutput(heldMatchingWeatherData);

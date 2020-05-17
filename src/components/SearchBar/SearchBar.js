@@ -17,36 +17,16 @@ function SearchBar(props)
     //API for that year. The user can then filter down the search, by track
     const [weatherData, setWeatherData] = props.weatherDataState;
     
-    //The data returned from the last search/filter (not the full list of loaded data)
+    //The data returned from the last search (not the full list of loaded data)
     const [searchResultData, setSearchResultData] = props.searchResultState;
-    
-    //This will create a list of the distinct circuit information for the searched year.
-    const yearsDistinctCircuits = [...new Set(weatherData.reduce((trackIds, track) => {
-        //If a year has been searched, and the track year matches the currently searched year.
-        if(searchResultData.length > 0 && track.year === searchResultData[0].year) 
-        {
-            trackIds.push({ id: track.circuitId, name: track.circuitName });
-        }
-        return trackIds;
-    }, []))];
-    
-    //This will populate the track filter dropdown with a distinct list of tracks for the correct year.
-    const trackFilterOptionslist = yearsDistinctCircuits.sort((a, b) => {
-        //First sort by the names, alphabetically.
-        if(a.name > b.name) return 1; else return -1;
-        
-    }).map((track) => {
-        return (<option key={"trackOption-" + track.id} value={track.id}>{track.name}</option>);
-    });
     
     //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
     const yearInputName = "yearInput";
-    const trackFilterInputName = "trackFilterSelector";
     
     //The closure to call when the search button is pressed
     const runSearch = async () => {
         props.setIsRetrievingDataState(true);
-        await retrieveWeatherData(yearInputName, trackFilterInputName, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
+        await retrieveWeatherData(yearInputName, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
         props.setIsRetrievingDataState(false);
     }
     
@@ -57,16 +37,6 @@ function SearchBar(props)
                     <label>Year (4 digit format):</label>
                     <input type="text" id={yearInputName} name={yearInputName} size="4" maxLength="4" />
                 </div>
-                
-                {trackFilterOptionslist.length > 0 && //We only want to display this if there are tracks available
-                    <div className="inputGroup">
-                        <label>Track Filter:</label>
-                        <select id={trackFilterInputName} name={trackFilterInputName}>
-                            <option value="all">All Tracks</option>
-                            {trackFilterOptionslist}
-                        </select>
-                    </div>
-                }
                 
                 <div className="inputGroup">
                     <button type="button" onClick={ runSearch }>Get Weather Data</button>

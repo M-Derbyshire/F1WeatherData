@@ -5,16 +5,6 @@ let yearInput = document.createElement("input");
 yearInput.id = "yearInput";
 document.body.appendChild(yearInput);
 
-let trackInput = document.createElement("select");
-let trackOptionAll = document.createElement("option");
-let trackOption100 = document.createElement("option");
-trackOptionAll.value = "all";
-trackOption100.value = "100";
-trackInput.appendChild(trackOptionAll);
-trackInput.appendChild(trackOption100);
-trackInput.id = "trackInput";
-document.body.appendChild(trackInput);
-
 const apiSettings = null;
 const setApiSettings = (val) => {};
 const setWeatherData = (val) => {};
@@ -24,7 +14,6 @@ const setSearchOutput = (val) => {};
 test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if given a valid year", async () => {
     
     document.getElementById(yearInput.id).value = "2008";
-    document.getElementById(trackInput.id).value = "all";
     const setWeatherData = jest.fn();
     const setSearchOutput = jest.fn();
     
@@ -117,7 +106,7 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     ];
     
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
     
     
     expect(setWeatherData).toHaveBeenCalledWith(expect.arrayContaining(expectedWeatherDataStateResult));
@@ -130,7 +119,6 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
 test("retirieveWeatherData will call displayInvalidYearAlert() if given an incorrect year value", async () => {
     
     document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
-    document.getElementById(trackInput.id).value = "all";
     window.alert = jest.fn();
     fetch.mockResponseOnce(JSON.stringify({
         "oldest_year_available": "1980",
@@ -139,7 +127,7 @@ test("retirieveWeatherData will call displayInvalidYearAlert() if given an incor
     
     
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
     
     
     //Cannot mock displayInvalidYearAlert(), as it's nested, so just check an alert was raised
@@ -171,9 +159,8 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
     
     //Get all tracks for 2020 ----------------------------------------
     document.getElementById(yearInput.id).value = "2020";
-    document.getElementById(trackInput.id).value = "all";
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
+    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
     expect(mockedSetSearchOutput).toHaveBeenCalledWith(expectedWeatherData);
 });
 
@@ -192,7 +179,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
         searchOutput = val;
     };
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(yearInput.id, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
     
     
     expect(searchOutput.length).toBe(1);
@@ -209,7 +196,6 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
 test("retrieveWeatherData will set the searchOutput to an array with an error message object, if there is no F1 data available", async () => {
     
     document.getElementById(yearInput.id).value = "2020"; //Invalid year input
-    document.getElementById(trackInput.id).value = "all";
     
     fetch.resetMocks();
     
@@ -237,7 +223,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
     
     
     
-    await retrieveWeatherData(yearInput.id, trackInput.id, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(yearInput.id, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
     
     
     expect(searchOutput.length).toBe(1);
