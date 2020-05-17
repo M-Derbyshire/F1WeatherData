@@ -20,10 +20,24 @@ function SearchBar(props)
     //The data returned from the last search/filter (not the full list of loaded data)
     const [searchResultData, setSearchResultData] = props.searchResultState;
     
-    //This will populate the track filter dropdown
-    const trackFilterOptionslist = searchResultData.map(
-        (track) => <option key={"trackOption-" + track.raceDate} value={track.circuitId}>{track.circuitName}</option>
-    );
+    //This will create a list of the distinct circuit information for the searched year.
+    const yearsDistinctCircuits = [...new Set(weatherData.reduce((trackIds, track) => {
+        //If a year has been searched, and the track year matches the currently searched year.
+        if(searchResultData.length > 0 && track.year === searchResultData[0].year) 
+        {
+            trackIds.push({ id: track.circuitId, name: track.circuitName });
+        }
+        return trackIds;
+    }, []))];
+    
+    //This will populate the track filter dropdown with a distinct list of tracks for the correct year.
+    const trackFilterOptionslist = yearsDistinctCircuits.sort((a, b) => {
+        //First sort by the names, alphabetically.
+        if(a.name > b.name) return 1; else return -1;
+        
+    }).map((track) => {
+        return (<option key={"trackOption-" + track.id} value={track.id}>{track.name}</option>);
+    });
     
     //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
     const yearInputName = "yearInput";
