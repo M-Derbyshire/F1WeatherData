@@ -2,7 +2,8 @@ import React from 'react';
 
 //Props:
 //error - The error message
-//isException - Boolean. Is this an exception?
+//isException - Boolean. Is this an exception? Used to set the color scheme of the component
+//  (red if an exception, orange if a lesser error)
 function ErrorMessage(props)
 {
     const style = {
