@@ -16,7 +16,7 @@ function ErrorMessage(props)
         borderRadius: "1em",
         padding: "0.5em",
         margin: "0.5em",
-        backgroundColor: (props.isException) ? "#FF0000" : "#FF5D00" //Red if excpetion, orange if not
+        backgroundColor: (props.isException) ? "#FF0000" : "#FF5D00" //Red if exception, orange if not
     };
     
     return (
