@@ -1,5 +1,5 @@
 .SearchBar {
-    margin: 0.5em;
+    margin: 0.5em auto;
     padding: 0.5em;
     background-color: #cccccc;
     border-radius: 1em;
@@ -18,6 +18,12 @@
 }
 
 @media only all and (max-width: 450px) {
+    
+    .SearchBar {
+        /* This is centered, but will touch the sides if margin left/right is left on auto */
+        margin: 0.5em;
+    }
+    
     #searchCriteria label, #searchCriteria input, #searchCriteria button {
         margin: 0.5em auto;
         display: block;

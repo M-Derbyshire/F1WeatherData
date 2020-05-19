@@ -1,6 +1,6 @@
 .ResultContainer {
     max-width: 45em;
     min-height: 60vh;
-    margin: 0.5em;
+    margin: 0.5em auto;
     padding: 0.5em;
 }

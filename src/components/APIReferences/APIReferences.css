@@ -1,5 +1,5 @@
 .APIReferences {
-    margin: 0.5em;
+    margin: 0.5em auto;
     padding: 0.5em;
     background-color: #eeeeee;
     border-radius: 1em;
@@ -11,4 +11,12 @@
     padding: 0.5em;
     margin: 0.5em 0;
     font-size: 0.75em;
+}
+
+@media only all and (max-width: 450px) {
+    
+    .APIReferences {
+        /* This is centered, but will touch the sides if margin left/right is left on auto */
+        margin: 0.5em;
+    }   
 }
