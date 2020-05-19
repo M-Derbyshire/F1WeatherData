@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 // Props: 
 // weatherDataState - array of the state and set-state-function for the weatherData
-// searchResultState - array of the state and set-state-function for the displayed data after a search/filter
+// setSearchResultState - set-state-function for the displayed data after a search/filter
 // setIsRetrievingDataState - set-state-function for a bool value, to be made true when the retrieval is running, 
 //      and false when it is complete.
 function SearchBar(props)
@@ -18,7 +18,7 @@ function SearchBar(props)
     const [weatherData, setWeatherData] = props.weatherDataState;
     
     //The data returned from the last search (not the full list of loaded data)
-    const [searchResultData, setSearchResultData] = props.searchResultState;
+    const setSearchResultData = props.setSearchResultState;
     
     //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
     const yearInputName = "yearInput";
