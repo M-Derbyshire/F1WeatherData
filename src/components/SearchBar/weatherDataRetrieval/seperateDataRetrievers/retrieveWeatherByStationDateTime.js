@@ -6,6 +6,10 @@ export default async function retrieveWeatherByStationDateTime(stationID, raceDa
     //If given a blank string as the weatherID (so no weatherID found), return null
     if(stationID === "") return null;
     
+    if(raceStartTime === "unknown")
+    {
+        raceStartTime = "12:00:00"; //If the time has not been provided, set to midday
+    }
     
     //race start time is UTC, so may (and should, if from the Ergast F1 API) end with a "Z".
     //If so, remove the Z.

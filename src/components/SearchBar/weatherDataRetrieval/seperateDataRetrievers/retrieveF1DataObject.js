@@ -21,7 +21,7 @@ export default async function retrieveF1DataObject(year)
                     lat: race.Circuit.Location.lat,
                     long: race.Circuit.Location.long,
                     raceDate: race.date,
-                    raceTime: race.time //Returned as UTC, so has 'Z' suffix
+                    raceTime: (race.hasOwnProperty("time")) ? race.time : "unknown" //Returned as UTC, so has 'Z' suffix (some old records don't have this)
                 };
             });
             
