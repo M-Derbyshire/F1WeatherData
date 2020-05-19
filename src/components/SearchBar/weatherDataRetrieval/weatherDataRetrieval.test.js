@@ -46,9 +46,10 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
         [
             //Weather by station and date.
             String.raw`{"meta":{"source":"National Oceanic and Atmospheric Administration, Deutscher Wetterdienst"},
-            "data":[{"date":"2008-03-16","temperature":null,"temperature_min":19.2,"temperature_max":39.1,
-            "precipitation":null,"snowfall":null,"snowdepth":null,"winddirection":null,"windspeed":null,
-            "peakgust":null,"sunshine":null,"pressure":null}]}`,
+            "data":[{"time":"2008-03-16 04:00:00", "time_local":"2008-03-16 05:00:00", "temperature":12.2,
+                "dewpoint":7.9, "humidity":75, "precipitation":0.1, "precipitation_3":null, "precipitation_6":null,
+                "snowdepth":null, "windspeed":0, "peakgust":16.7, "winddirection":270, "pressure":1016, 
+                "condition":4}]}`,
             {status: 200}
         ]
     );
@@ -72,31 +73,36 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     ];
     
     const expectedOutputResult = [
-        { year: '2008',
-        circuitId: 'albert_park',
-        circuitName: 'Albert Park Grand Prix Circuit',
-        raceName: 'Australian Grand Prix',
-        round: '1',
-        locality: 'Melbourne',
-        country: 'Australia',
-        lat: '-37.8497',
-        long: '144.968',
-        raceDate: '2008-03-16',
-        raceTime: '04:30:00Z',
-        stationID: '94868',
-        weather:
-         { date: '2008-03-16',
-           temperature: null,
-           temperature_min: 19.2,
-           temperature_max: 39.1,
-           precipitation: null,
-           snowfall: null,
-           snowdepth: null,
-           winddirection: null,
-           windspeed: null,
-           peakgust: null,
-           sunshine: null,
-           pressure: null } 
+        { 
+            year: '2008',
+            circuitId: 'albert_park',
+            circuitName: 'Albert Park Grand Prix Circuit',
+            raceName: 'Australian Grand Prix',
+            round: '1',
+            locality: 'Melbourne',
+            country: 'Australia',
+            lat: '-37.8497',
+            long: '144.968',
+            raceDate: '2008-03-16',
+            raceTime: '04:30:00Z',
+            stationID: '94868',
+            weather:
+            { 
+                time:"2008-03-16 04:00:00",
+                time_local:"2008-03-16 05:00:00",
+                temperature:12.2,
+                dewpoint:7.9,
+                humidity:75,
+                precipitation:0.1,
+                precipitation_3:null,
+                precipitation_6:null,
+                snowdepth:null,
+                windspeed:0,
+                peakgust:16.7,
+                winddirection:270,
+                pressure:1016,
+                condition:4 
+            } 
         }
     ];
     
@@ -107,7 +113,6 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     
     
     await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
-    
     
     expect(setWeatherData).toHaveBeenCalledWith(expect.arrayContaining(expectedWeatherDataStateResult));
     expect(setSearchOutput).toHaveBeenCalledWith(expect.arrayContaining(expectedOutputResult));

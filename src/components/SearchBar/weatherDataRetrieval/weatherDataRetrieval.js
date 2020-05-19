@@ -3,7 +3,7 @@ import getMatchingHeldWeatherData from './getMatchingHeldWeatherData';
 import getAPISettings from './seperateDataRetrievers/getAPISettings';
 import retrieveF1DataObject from './seperateDataRetrievers/retrieveF1DataObject';
 import retrieveWeatherStationID from './seperateDataRetrievers/retrieveWeatherStationID';
-import retrieveWeatherByStationAndDate from './seperateDataRetrievers/retrieveWeatherByStationAndDate';
+import retrieveWeatherByStationDateTime from './seperateDataRetrievers/retrieveWeatherByStationDateTime';
 import getErrorDataObject from './getErrorDataObject';
 
 //Requires: the ID of the year input element; the ID of the track selector element; the apiSettings hook
@@ -74,8 +74,8 @@ export default async function retrieveWeatherData(yearInputID, passedApiSettings
             
             //Will return null if there is no weather data found, or if the provided stationID is an empty string.
             //(Returns null instead of an empty object, as that's actually recieved as undefined.)
-            const raceWeatherData = await retrieveWeatherByStationAndDate(f1DataWithStations[i].stationID, 
-                f1DataWithStations[i].raceDate, apiSettings.meteostat_API_key);
+            const raceWeatherData = await retrieveWeatherByStationDateTime(f1DataWithStations[i].stationID, 
+                f1DataWithStations[i].raceDate, f1DataWithStations[i].raceTime, apiSettings.meteostat_API_key);
             
             newF1WeatherData.push({
                 ...f1DataWithStations[i],

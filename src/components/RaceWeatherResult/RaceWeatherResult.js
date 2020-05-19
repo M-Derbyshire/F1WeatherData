@@ -2,6 +2,24 @@ import React from 'react';
 import './RaceWeatherResult.css';
 import WeatherStat from './WeatherStat/WeatherStat';
 
+
+/*
+If switching the weather data API method to daily, rather than hourly, use the below:
+
+const weatherStatData = [
+        { label: "Temperature", key: "temperature", units: "°C" },
+        { label: "Precipitation", key: "precipitation", units: "mm" },
+        { label: "Snowfall", key: "snowfall", units: "mm" },
+        { label: "Snow Depth", key: "snowdepth", units: "mm" },
+        { label: "Wind Direction", key: "winddirection", units: "°" },
+        { label: "Wind Speed", key: "windspeed", units: "km/h" },
+        { label: "Sunshine Duration", key: "sunshine", units: " hours" },
+        { label: "Pressure", key: "pressure", units: "hPa" }
+    ];
+*/
+
+
+
 // Props:
 // raceAndWeatherData - An object with the race info, and weather data
 function RaceWeatherResult(props)
@@ -19,12 +37,12 @@ function RaceWeatherResult(props)
     //Add any new ones here.
     const weatherStatData = [
         { label: "Temperature", key: "temperature", units: "°C" },
+        { label: "Dew Point", key: "dewpoint", units: "°C" },
+        { label: "Humidity", key: "humidity", units: "%" },
         { label: "Precipitation", key: "precipitation", units: "mm" },
-        { label: "Snowfall", key: "snowfall", units: "mm" },
         { label: "Snow Depth", key: "snowdepth", units: "mm" },
         { label: "Wind Direction", key: "winddirection", units: "°" },
         { label: "Wind Speed", key: "windspeed", units: "km/h" },
-        { label: "Sunshine Duration", key: "sunshine", units: " hours" },
         { label: "Pressure", key: "pressure", units: "hPa" }
     ];
     
