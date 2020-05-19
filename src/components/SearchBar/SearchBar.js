@@ -34,7 +34,7 @@ function SearchBar(props)
         <div className="SearchBar">
             <form id="searchCriteria">
                 <div className="inputGroup">
-                    <label>Year (4 digit format):</label>
+                    <label>Enter Year (4 digit format):</label>
                     <input type="text" id={yearInputName} name={yearInputName} size="4" maxLength="4" />
                 </div>
                 
