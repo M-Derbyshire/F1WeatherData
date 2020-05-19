@@ -1,3 +1,13 @@
+## App Requirements
+
+For this app to work, you will require an API key for the weather data from https://api.meteostat.net/
+
+Once you have this key, go to the public folder. The key will need to be placed in a file, in the public folder, named api_settings.json. There is a file already there called api_settings.example.json -- this will show you what needs to be in the api_settings.json file.
+
+Follow me at https://twitter.com/mattdarbs
+
+## React Info
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
