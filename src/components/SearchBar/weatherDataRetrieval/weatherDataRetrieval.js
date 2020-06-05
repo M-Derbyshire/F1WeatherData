@@ -7,7 +7,9 @@ import retrieveWeatherByStationDateTime from './seperateDataRetrievers/retrieveW
 import getErrorDataObject from './getErrorDataObject';
 
 //Requires: the ID of the year input element; the apiSettings hook
-//state (or null if not yet set) and set-function; the function to set the trackList state
+//state value (or null if not yet set) and set-function; the weatherData 
+//hook state value, and its set-function; the set-function for the search
+//output state.
 export default async function retrieveWeatherData(yearInputID, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
 {
     const year = document.getElementById(yearInputID).value;
