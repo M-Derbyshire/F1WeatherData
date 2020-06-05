@@ -32,14 +32,14 @@ function SearchBar(props)
     
     return (
         <div className="SearchBar">
-            <form id="searchCriteria">
+            <form id="searchCriteria" onSubmit={(e) => { e.preventDefault(); runSearch(); }}>
                 <div className="inputGroup">
                     <label>Enter Year:</label>
                     <input type="text" id={yearInputName} name={yearInputName} size="4" maxLength="4" />
                 </div>
                 
                 <div className="inputGroup">
-                    <button type="button" onClick={ runSearch }>Get Weather Data</button>
+                    <button type="submit">Get Weather Data</button>
                 </div>
             </form>
         </div>
