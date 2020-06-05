@@ -14,7 +14,7 @@ function SearchBar(props)
     const [apiSettings, setApiSettings] = useState(null);
     
     //The list of tracks, and their weather data, brought back from the 
-    //API for that year. The user can then filter down the search, by track
+    //API for that year.
     const [weatherData, setWeatherData] = props.weatherDataState;
     
     //The data returned from the last search (not the full list of loaded data)
