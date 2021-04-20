@@ -1,57 +1,46 @@
 import React from 'react';
 import './App.css';
 import { useState } from 'react';
-import SearchBar from '../SearchBar/SearchBar';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar';
 import APIReferences from '../APIReferences/APIReferences';
-import ResultContainer from '../ResultContainer/ResultContainer';
-import RaceWeatherResult from '../RaceWeatherResult/RaceWeatherResult';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import DataRetrievingMessage from '../DataRetrievingMessage/DataRetrievingMessage';
+import WeatherSearch from '../WeatherSearch/WeatherSearch';
+import AboutInfo from '../AboutInfo/AboutInfo';
 
 
 function App() {
-  
-  const [weatherData, setWeatherData] = useState([]);
-  const [searchResultData, setSearchResultData] = useState([]);
-  const [isRetrievingData, setIsRetrievingData] = useState(false);
-  
-  return (
-    <div className="App">
-      <SearchBar 
-        weatherDataState={[weatherData, setWeatherData]} 
-        setSearchResultState={setSearchResultData} 
-        setIsRetrievingDataState={setIsRetrievingData}
-      />
-      
-      <ResultContainer>
-        {
-          //If we are currently retrieving data, display a message to show this
-          isRetrievingData && <DataRetrievingMessage />
-        }
-        
-        {/* If we are not currently retrieving any data, display the searchOutput (if there's any to show) */}
-        {!isRetrievingData && searchResultData.map((raceData, index) => {
-            
-            //Results of the search (or an ErrorMessage component, if search returns an error message object)
-            if(raceData.hasOwnProperty("error") && raceData.hasOwnProperty("isException"))
-            {
-              return (
-                <ErrorMessage key={"error-" + index} error={raceData.error} isException={raceData.isException} />
-              );
-            }
-            else
-            {
-              return (
-                <RaceWeatherResult key={"race-data-" + raceData.raceDate} raceAndWeatherData={raceData} />
-              );
-            }
-          })
-        }
-      </ResultContainer>
-      
-      <APIReferences />
-    </div>
-  );
+
+	const [weatherData, setWeatherData] = useState([]);
+	const [searchResultData, setSearchResultData] = useState([]);
+	const [isRetrievingData, setIsRetrievingData] = useState(false);
+
+	return (
+		<Router>
+			<div className="App">
+				
+				<NavBar />
+				
+				<Switch>
+					<Route exact path="/">
+						<WeatherSearch 
+							weatherData={weatherData}
+							setWeatherData={setWeatherData}
+							searchResultData={searchResultData}
+							setSearchResultData={setSearchResultData}
+							isRetrievingData={isRetrievingData}
+							setIsRetrievingData={setIsRetrievingData}
+						/>
+					</Route>
+					
+					<Route exact path="/about">
+						<AboutInfo />
+					</Route>
+				</Switch>
+				
+				<APIReferences />
+			</div>
+		</Router>
+	);
 }
 
 export default App;
