@@ -2,7 +2,7 @@ export default async function getAPISettings(currentApiSettings, jsonPath = "api
 {
     //If the apiSettings haven't yet been loaded, load them.
     //Otherwise, use the state that was passed in.
-    if(currentApiSettings === null)
+    if(!currentApiSettings)
     {
         return await loadAPISettings(jsonPath);
     }
