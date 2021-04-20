@@ -6,6 +6,7 @@ import NavBar from '../NavBar/NavBar';
 import APIReferences from '../APIReferences/APIReferences';
 import WeatherSearch from '../WeatherSearch/WeatherSearch';
 import AboutInfo from '../AboutInfo/AboutInfo';
+import RouteNotFoundMessage from '../RouteNotFoundMessage/RouteNotFoundMessage';
 
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
 					
 					<Route exact path="/about">
 						<AboutInfo />
+					</Route>
+					
+					<Route path="/">
+						<RouteNotFoundMessage />
 					</Route>
 				</Switch>
 				
