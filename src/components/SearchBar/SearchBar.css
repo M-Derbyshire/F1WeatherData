@@ -17,7 +17,7 @@
     margin-right: 0.25em;
 }
 
-@media only all and (max-width: 450px) {
+@media (max-width: 450px) {
     
     .SearchBar {
         /* This is centered, but will touch the sides if margin left/right is left on auto */
