@@ -1,8 +1,15 @@
-export default async function retrieveF1DataObject(year)
+//Takes the year as an input, and can also be given an offset, and a result limit 
+// - The resultOffset will tell the API to only provide races after a given round number.
+// - The resultLimit will be ignored if set to a negative number. This will limit the amount 
+//		of results we recieve.
+export default async function retrieveF1DataObject(year, resultOffset = 0, resultLimit = -1)
 {
     try
     {
-        let response = await fetch(`http://ergast.com/api/f1/${year}/races.json`);
+		let requestURL = `http://ergast.com/api/f1/${year}/races.json?offset=${resultOffset}`;
+		if(resultLimit > -1) requestURL += `&limit=${resultLimit}`; 
+		
+        let response = await fetch(requestURL);
         
         if(response.ok)
         {
