@@ -26,7 +26,7 @@ function SearchBar(props)
     //The closure to call when the search button is pressed
     const runSearch = async () => {
         props.setIsRetrievingDataState(true);
-		const yearInput = document.getElementByID("weatherDataRetrieval");
+		const yearInput = document.getElementByID(yearInputName);
         await retrieveWeatherData(yearInput.value, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
         props.setIsRetrievingDataState(false);
     }
