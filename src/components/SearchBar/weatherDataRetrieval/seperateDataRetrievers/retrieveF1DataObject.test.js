@@ -45,11 +45,12 @@ test("retrieveF1DataObject will return an array of objects with the required dat
     
     const year = 2008;
     
-    let result = await retrieveF1DataObject(year);
+    let result = await retrieveF1DataObject(year, 2);
     
     result.forEach((race) => {
         //Are these defined and not null?
         expect(race.year).toEqual(expect.anything());
+		expect(race.quarter).toBe(2);
         expect(race.circuitId).toEqual(expect.anything());
         expect(race.circuitName).toEqual(expect.anything());
         expect(race.raceName).toEqual(expect.anything());
@@ -113,7 +114,7 @@ test("retrieveF1DataObject will make requests with the given resultOffset value"
 			fetch.mockResponse((req) => {
 				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i);
 			});
-			await retrieveF1DataObject(year, i);
+			await retrieveF1DataObject(year, 1, i);
 		}
 		
 		expect(true).toBeTruthy();
@@ -140,7 +141,7 @@ test("retrieveF1DataObject will make requests with the given resultLimit value",
 			fetch.mockResponse((req) => {
 				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i);
 			});
-			await retrieveF1DataObject(year, 0, i);
+			await retrieveF1DataObject(year, 1, 0, i);
 		}
 		
 		expect(true).toBeTruthy();
@@ -170,7 +171,7 @@ test("retrieveF1DataObject will make requests without a limit parameter, if the 
 			fetch.mockResponse((req) => {
 				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i, true);
 			});
-			await retrieveF1DataObject(year, 0, i);
+			await retrieveF1DataObject(year, 1, 0, i);
 			
 			fail(`An error was not thrown when it was expected. The resultLimit value was ${i}.`);
 		}

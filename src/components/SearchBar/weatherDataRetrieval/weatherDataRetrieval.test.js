@@ -56,25 +56,28 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     
     //A year after the one we're retrieving
     const currentWeatherData = [
-        { year: '2009',
-        circuitId: 'albert_park',
-        circuitName: 'Albert Park Grand Prix Circuit',
-        raceName: 'Australian Grand Prix',
-        round: '1',
-        locality: 'Melbourne',
-        country: 'Australia',
-        lat: '-37.8497',
-        long: '144.968',
-        raceDate: '2009-03-16',
-        raceTime: '04:30:00Z',
-        stationID: '94868',
-        weather: {  } 
+        { 
+			year: '2009',
+			quarter: 1,
+			circuitId: 'albert_park',
+			circuitName: 'Albert Park Grand Prix Circuit',
+			raceName: 'Australian Grand Prix',
+			round: '1',
+			locality: 'Melbourne',
+			country: 'Australia',
+			lat: '-37.8497',
+			long: '144.968',
+			raceDate: '2009-03-16',
+			raceTime: '04:30:00Z',
+			stationID: '94868',
+			weather: {  } 
         }
     ];
     
     const expectedOutputResult = [
         { 
             year: '2008',
+			quarter: 1,
             circuitId: 'albert_park',
             circuitName: 'Albert Park Grand Prix Circuit',
             raceName: 'Australian Grand Prix',
@@ -152,14 +155,14 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
     const mockedSetSearchOutput = jest.fn();
     
     const weatherData = [
-        { year: "2020", circuitId: "100" },
-        { year: "2020", circuitId: "200" },
-        { year: "2021", circuitId: "100" }
+        { year: "2020", circuitId: "100", quarter: 1 },
+        { year: "2020", circuitId: "200", quarter: 1 },
+        { year: "2021", circuitId: "100", quarter: 1 }
     ];
     
     const expectedWeatherData = [
-        { year: "2020", circuitId: "100" },
-        { year: "2020", circuitId: "200" }
+        { year: "2020", circuitId: "100", quarter: 1 },
+        { year: "2020", circuitId: "200", quarter: 1 }
     ];
     
     //Get all tracks for 2020 ----------------------------------------

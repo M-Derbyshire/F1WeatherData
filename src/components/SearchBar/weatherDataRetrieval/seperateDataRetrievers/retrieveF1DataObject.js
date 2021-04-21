@@ -2,7 +2,7 @@
 // - The resultOffset will tell the API to only provide races after a given round number.
 // - The resultLimit will be ignored if set to a negative number. This will limit the amount 
 //		of results we recieve.
-export default async function retrieveF1DataObject(year, resultOffset = 0, resultLimit = -1)
+export default async function retrieveF1DataObject(year, quarter = 1, resultOffset = 0, resultLimit = -1)
 {
     try
     {
@@ -19,6 +19,7 @@ export default async function retrieveF1DataObject(year, resultOffset = 0, resul
             let requiredF1Data = allF1Data.MRData.RaceTable.Races.map((race) => {
                 return {
                     year: year,
+					quarter: quarter,
                     circuitId: race.Circuit.circuitId,
                     circuitName: race.Circuit.circuitName,
                     raceName: race.raceName,
