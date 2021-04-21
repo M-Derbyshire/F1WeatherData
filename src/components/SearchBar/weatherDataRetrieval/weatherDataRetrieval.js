@@ -1,4 +1,5 @@
 import validateYearInput, { displayInvalidYearAlert } from './yearInputValidation';
+import isQuarterValid from './quarterInputValidation';
 import getMatchingHeldWeatherData from './getMatchingHeldWeatherData';
 import getAPISettings from './seperateDataRetrievers/getAPISettings';
 import retrieveF1DataObject from './seperateDataRetrievers/retrieveF1DataObject';
@@ -21,10 +22,17 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         
         
         //Validate the year input, and alert the user if it isn't valid
-        const validationResult = validateYearInput(year, apiSettings.oldest_year_available);
-        if(validationResult !== "valid")
+        const yearValidationResult = validateYearInput(year, apiSettings.oldest_year_available);
+        if(yearValidationResult !== "valid")
         {
-            displayInvalidYearAlert(validationResult, year);
+            displayInvalidYearAlert(yearValidationResult, year);
+            return;
+        }
+		
+		//Validate the quarter input, and alert the user if it isn't valid
+        if(!isQuarterValid(quarter))
+        {
+            alert(`Unfortunately, the given quarter value ("${quarter}") is incorrect.`);
             return;
         }
         

@@ -246,3 +246,21 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
     expect(searchOutput[0]).toHaveProperty("isException");
     expect(searchOutput[0].isException).toBeFalsy();
 });
+
+
+test("retrieveWeatherData will display an alert if given an incorrect quarter value", async () => {
+    
+    const year = "2020";
+	const quarter = "first"; //Should be an integer
+    window.alert = jest.fn();
+    fetch.mockResponseOnce(JSON.stringify({
+        "oldest_year_available": "1980",
+        "meteostat_API_key": "test"
+    }));
+    
+    
+    
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
+    
+    expect(window.alert).toHaveBeenCalled();
+});
