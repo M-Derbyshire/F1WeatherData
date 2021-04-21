@@ -23,7 +23,11 @@ export default async function retrieveWeatherByStationDateTime(stationID, raceDa
     try
     {
         //This will return data for the provided date.
-        let response = await fetch(`https://api.meteostat.net/v1/history/hourly?station=${stationID}&start=${raceDate}&end=${raceDate}&time_format=Y-m-d%20H:i&key=${apiKey}`);
+        let response = await fetch(`https://api.meteostat.net/v2/stations/hourly?station=${stationID}&start=${raceDate}&end=${raceDate}&time_format=Y-m-d%20H:i`, {
+			headers: {
+				'x-api-key': apiKey
+			}
+		});
         
         if(response.ok)
         {
@@ -33,18 +37,19 @@ export default async function retrieveWeatherByStationDateTime(stationID, raceDa
             //The display components will need to handle the data not being available.
             //If we return an empty object from here, it will just be recieved as undefined, so returning null.
             //If the data for the hour is available, return that object
-            
-            //We will need to find the record for hour within which the race started.
-            //E.g. a race starting at 13:34 will bring back the weather data for 13:00.
-            const raceHourSearchString = raceDate + " " + raceStartTime.substring(0, 2) + ":00:00";
-            const requestedHoursData = weatherData.data.filter(w => w.time === raceHourSearchString);
-            
-            if(weatherData.data.length === 0 || requestedHoursData.length === 0)
+            if(!weatherData.data || weatherData.data.length === 0)
             {
                 return null;
             }
             else
             {
+				//We will need to find the record for hour within which the race started.
+				//E.g. a race starting at 13:34 will bring back the weather data for 13:00.
+				const raceHourSearchString = raceDate + " " + raceStartTime.substring(0, 2) + ":00:00";
+				const requestedHoursData = weatherData.data.filter(w => w.time === raceHourSearchString);
+				
+				if(requestedHoursData.length === 0) return null;
+				
                 //This should only have one result, but if some strange case means there's more,
                 //We are able to handle it.
                 return requestedHoursData[0];

@@ -4,7 +4,11 @@ export default async function retrieveWeatherStationID(lat, long, apiKey)
     {
         //We are limiting the station list to 1 result, as the api provides them in order of distance,
         //so the first will be the closest.
-        let response = await fetch(`https://api.meteostat.net/v1/stations/nearby?lat=${lat}&lon=${long}&limit=1&key=${apiKey}`);
+        let response = await fetch(`https://api.meteostat.net/v2/stations/nearby?lat=${lat}&lon=${long}&limit=1`, {
+			headers: {
+				'x-api-key': apiKey
+			}
+		});
         
         if(response.ok)
         {
