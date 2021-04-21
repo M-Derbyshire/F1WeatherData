@@ -20,13 +20,14 @@ function SearchBar(props)
     //The data returned from the last search (not the full list of loaded data)
     const setSearchResultData = props.setSearchResultState;
     
-    //Form inputs names/IDs. Setting here, as re-used in retrieveWeatherData() call.
+    //Form inputs names/IDs. Setting name here, as used in the rendered output.
     const yearInputName = "yearInput";
     
     //The closure to call when the search button is pressed
     const runSearch = async () => {
         props.setIsRetrievingDataState(true);
-        await retrieveWeatherData(yearInputName, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
+		const yearInput = document.getElementByID("weatherDataRetrieval");
+        await retrieveWeatherData(yearInput.value, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
         props.setIsRetrievingDataState(false);
     }
     

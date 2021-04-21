@@ -13,7 +13,8 @@ const setSearchOutput = (val) => {};
 
 test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if given a valid year", async () => {
     
-    document.getElementById(yearInput.id).value = "2008";
+    const year = "2008";
+	const quarter = 1;
     const setWeatherData = jest.fn();
     const setSearchOutput = jest.fn();
     
@@ -115,7 +116,7 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     ];
     
     
-    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
     
     expect(setWeatherData).toHaveBeenCalledWith(expect.arrayContaining(expectedWeatherDataStateResult));
     expect(setSearchOutput).toHaveBeenCalledWith(expect.arrayContaining(expectedOutputResult));
@@ -126,7 +127,8 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
 
 test("retrieveWeatherData will call displayInvalidYearAlert() if given an incorrect year value", async () => {
     
-    document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
+    const year = "2K20"; //Invalid year input
+	const quarter = 1;
     window.alert = jest.fn();
     fetch.mockResponseOnce(JSON.stringify({
         "oldest_year_available": "1980",
@@ -135,7 +137,7 @@ test("retrieveWeatherData will call displayInvalidYearAlert() if given an incorr
     
     
     
-    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
     
     
     //Cannot mock displayInvalidYearAlert(), as it's nested, so just check an alert was raised
@@ -166,9 +168,10 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
     ];
     
     //Get all tracks for 2020 ----------------------------------------
-    document.getElementById(yearInput.id).value = "2020";
+    const year = "2020";
+	const quarter = 1;
     
-    await retrieveWeatherData(yearInput.id, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
     expect(mockedSetSearchOutput).toHaveBeenCalledWith(expectedWeatherData);
 });
 
@@ -186,8 +189,11 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
     const setSearchOutputWithErrorObject = (val) => {
         searchOutput = val;
     };
+	
+	const year = "2020";
+	const quarter = 1;
     
-    await retrieveWeatherData(yearInput.id, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(year, quarter, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
     
     
     expect(searchOutput.length).toBe(1);
@@ -203,7 +209,8 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
 
 test("retrieveWeatherData will set the searchOutput to an array with an error message object, if there is no F1 data available", async () => {
     
-    document.getElementById(yearInput.id).value = "2020";
+    const year = "2020";
+	const quarter = 1;
     
     fetch.resetMocks();
     
@@ -231,7 +238,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
     
     
     
-    await retrieveWeatherData(yearInput.id, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(year, quarter, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
     
     
     expect(searchOutput.length).toBe(1);

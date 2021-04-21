@@ -10,10 +10,8 @@ import getErrorDataObject from './getErrorDataObject';
 //state value (or null if not yet set) and set-function; the weatherData 
 //hook state value, and its set-function; the set-function for the search
 //output state.
-export default async function retrieveWeatherData(yearInputID, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
+export default async function retrieveWeatherData(year, quarter, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
 {
-    const year = document.getElementById(yearInputID).value;
-    
     try
     {
         //Get and validate the API settings.
