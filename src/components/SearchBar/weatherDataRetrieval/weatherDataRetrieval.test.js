@@ -124,7 +124,7 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
 
 
 
-test("retirieveWeatherData will call displayInvalidYearAlert() if given an incorrect year value", async () => {
+test("retrieveWeatherData will call displayInvalidYearAlert() if given an incorrect year value", async () => {
     
     document.getElementById(yearInput.id).value = "2K20"; //Invalid year input
     window.alert = jest.fn();
@@ -203,7 +203,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
 
 test("retrieveWeatherData will set the searchOutput to an array with an error message object, if there is no F1 data available", async () => {
     
-    document.getElementById(yearInput.id).value = "2020"; //Invalid year input
+    document.getElementById(yearInput.id).value = "2020";
     
     fetch.resetMocks();
     
