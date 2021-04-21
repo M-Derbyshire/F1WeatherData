@@ -6,7 +6,8 @@ import retrieveWeatherStationID from './seperateDataRetrievers/retrieveWeatherSt
 import retrieveWeatherByStationDateTime from './seperateDataRetrievers/retrieveWeatherByStationDateTime';
 import getErrorDataObject from './getErrorDataObject';
 
-//Requires: the ID of the year input element; the apiSettings hook
+//Requires: the year for the data that is requested; the quarter (1, 2, 3 or 4) of 
+//the season for the request; the apiSettings hook;
 //state value (or null if not yet set) and set-function; the weatherData 
 //hook state value, and its set-function; the set-function for the search
 //output state.
