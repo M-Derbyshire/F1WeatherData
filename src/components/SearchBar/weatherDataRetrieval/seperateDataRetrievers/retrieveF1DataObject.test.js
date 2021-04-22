@@ -103,19 +103,36 @@ test("retrieveF1DataObject will make requests with the given resultOffset value"
 
 	const year = 2008;
 	const expectedParam = "offset";
+	const quarterRoundCount = 6;
 	
 	try
 	{
 		//We want to pass if these don't throw errors
 		
-		for(let i = 0; i < 10; i++)
-		{
-			fetch.resetMocks();
-			fetch.mockResponse((req) => {
-				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i);
-			});
-			await retrieveF1DataObject(year, 1, i);
-		}
+		fetch.resetMocks();
+		fetch.mockResponse((req) => {
+			return mockResponseAssertWithPromise(req, responseJSON, expectedParam, 0);
+		});
+		await retrieveF1DataObject(year, 1);
+		
+		fetch.resetMocks();
+		fetch.mockResponse((req) => {
+			return mockResponseAssertWithPromise(req, responseJSON, expectedParam, quarterRoundCount);
+		});
+		await retrieveF1DataObject(year, 2);
+		
+		fetch.resetMocks();
+		fetch.mockResponse((req) => {
+			return mockResponseAssertWithPromise(req, responseJSON, expectedParam, quarterRoundCount * 2);
+		});
+		await retrieveF1DataObject(year, 3);
+		
+		fetch.resetMocks();
+		fetch.mockResponse((req) => {
+			return mockResponseAssertWithPromise(req, responseJSON, expectedParam, quarterRoundCount * 3);
+		});
+		await retrieveF1DataObject(year, 4);
+		
 		
 		expect(true).toBeTruthy();
 	}
@@ -126,7 +143,7 @@ test("retrieveF1DataObject will make requests with the given resultOffset value"
 });
 
 
-test("retrieveF1DataObject will make requests with the given resultLimit value", async () => {
+test("retrieveF1DataObject will make requests with the correct resultLimit value, based on the round number", async () => {
 
 	const year = 2008;
 	const expectedParam = "limit";
@@ -141,7 +158,7 @@ test("retrieveF1DataObject will make requests with the given resultLimit value",
 			fetch.mockResponse((req) => {
 				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i);
 			});
-			await retrieveF1DataObject(year, 1, 0, i);
+			await retrieveF1DataObject(year, 1, i);
 		}
 		
 		expect(true).toBeTruthy();
@@ -171,7 +188,7 @@ test("retrieveF1DataObject will make requests without a limit parameter, if the 
 			fetch.mockResponse((req) => {
 				return mockResponseAssertWithPromise(req, responseJSON, expectedParam, i, true);
 			});
-			await retrieveF1DataObject(year, 1, 0, i);
+			await retrieveF1DataObject(year, 1, i);
 			
 			fail(`An error was not thrown when it was expected. The resultLimit value was ${i}.`);
 		}

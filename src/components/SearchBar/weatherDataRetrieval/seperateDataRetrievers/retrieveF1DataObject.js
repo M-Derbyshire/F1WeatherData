@@ -1,11 +1,15 @@
 //Takes the year as an input, and can also be given an offset, and a result limit 
-// - The resultOffset will tell the API to only provide races after a given round number.
+// - The quarter value will be used to calculate the result offset sent to the API.
 // - The resultLimit will be ignored if set to a negative number. This will limit the amount 
 //		of results we recieve.
-export default async function retrieveF1DataObject(year, quarter = 1, resultOffset = 0, resultLimit = -1)
+export default async function retrieveF1DataObject(year, quarter = 1, resultLimit = -1)
 {
+	const quarterRoundCount = 6;
+	const resultOffset = (quarter - 1) * quarterRoundCount;
+	
     try
     {
+		
 		let requestURL = `http://ergast.com/api/f1/${year}/races.json?offset=${resultOffset}`;
 		if(resultLimit > -1) requestURL += `&limit=${resultLimit}`; 
 		
