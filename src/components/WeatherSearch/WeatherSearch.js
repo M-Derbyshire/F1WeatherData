@@ -7,22 +7,27 @@ import DataRetrievingMessage from '../DataRetrievingMessage/DataRetrievingMessag
 
 function WeatherSearch(props)
 {
+	const weatherResultsStates = props.weatherResultsStates;
+	const isRetrievingData = weatherResultsStates.isRetrievingDataState[0];
+	const searchResultData = weatherResultsStates.searchResultDataState[0];
+	
 	return (
 		<div className="WeatherSearch">
 			<SearchBar 
-				weatherDataState={[props.weatherData, props.setWeatherData]} 
-				setSearchResultState={props.setSearchResultData} 
-				setIsRetrievingDataState={props.setIsRetrievingData}
+				weatherDataState={weatherResultsStates.weatherDataState} 
+				setSearchResultState={weatherResultsStates.searchResultDataState[1]} 
+				setIsRetrievingDataState={weatherResultsStates.isRetrievingDataState[1]}
+				apiSettingsState={props.apiSettingsState}
 			/>
 
 			<ResultContainer>
 				{
 					//If we are currently retrieving data, display a message to show this
-					props.isRetrievingData && <DataRetrievingMessage />
+					isRetrievingData && <DataRetrievingMessage />
 				}
 
 				{/* If we are not currently retrieving any data, display the searchOutput (if there's any to show) */}
-				{!props.isRetrievingData && props.searchResultData.map((raceData, index) => {
+				{!isRetrievingData && searchResultData.map((raceData, index) => {
 						
 						//Results of the search (or an ErrorMessage component, if search returns an error message object)
 						if(raceData.hasOwnProperty("error") && raceData.hasOwnProperty("isException"))

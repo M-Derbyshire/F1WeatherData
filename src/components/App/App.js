@@ -11,9 +11,18 @@ import RouteNotFoundMessage from '../RouteNotFoundMessage/RouteNotFoundMessage';
 
 function App() {
 
+	//The apiSettings, loaded from api_settings.json
+    const apiSettingsState = useState(null);
+	
 	const [weatherData, setWeatherData] = useState([]);
 	const [searchResultData, setSearchResultData] = useState([]);
 	const [isRetrievingData, setIsRetrievingData] = useState(false);
+	
+	const weatherResultsStatesData = {
+		weatherDataState: [weatherData, setWeatherData],
+		searchResultDataState: [searchResultData, setSearchResultData],
+		isRetrievingDataState: [isRetrievingData, setIsRetrievingData]
+	};
 
 	return (
 		<Router>
@@ -23,14 +32,7 @@ function App() {
 				
 				<Switch>
 					<Route exact path="/">
-						<WeatherSearch 
-							weatherData={weatherData}
-							setWeatherData={setWeatherData}
-							searchResultData={searchResultData}
-							setSearchResultData={setSearchResultData}
-							isRetrievingData={isRetrievingData}
-							setIsRetrievingData={setIsRetrievingData}
-						/>
+						<WeatherSearch weatherResultsStates={weatherResultsStatesData} apiSettingsState={apiSettingsState} />
 					</Route>
 					
 					<Route exact path="/about">
