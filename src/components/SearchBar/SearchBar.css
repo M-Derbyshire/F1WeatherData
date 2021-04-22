@@ -24,7 +24,7 @@
         margin: 0.5em;
     }
     
-    #searchCriteria label, #searchCriteria input, #searchCriteria button {
+    #searchCriteria label, #searchCriteria input, #searchCriteria button, #searchCriteria select {
         margin: 0.5em auto;
         display: block;
         font-size: 1.5em;
