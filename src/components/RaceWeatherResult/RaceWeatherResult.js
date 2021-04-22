@@ -36,14 +36,14 @@ function RaceWeatherResult(props)
     //label (the name to display); key (the property name in the API result); units (the unit of measurement)
     //Add any new ones here.
     const weatherStatData = [
-        { label: "Temperature", key: "temperature", units: "°C" },
-        { label: "Dew Point", key: "dewpoint", units: "°C" },
-        { label: "Humidity", key: "humidity", units: "%" },
-        { label: "Precipitation", key: "precipitation", units: "mm" },
-        { label: "Snow Depth", key: "snowdepth", units: "mm" },
-        { label: "Wind Direction", key: "winddirection", units: "°" },
-        { label: "Wind Speed", key: "windspeed", units: "km/h" },
-        { label: "Pressure", key: "pressure", units: "hPa" }
+        { label: "Temperature", key: "temp", units: "°C" },
+        { label: "Dew Point", key: "dwpt", units: "°C" },
+        { label: "Humidity", key: "rhum", units: "%" },
+        { label: "Precipitation", key: "prcp", units: "mm" },
+        { label: "Snow Depth", key: "snow", units: "mm" },
+        { label: "Wind Direction", key: "wdir", units: "°" },
+        { label: "Wind Speed", key: "wspd", units: "km/h" },
+        { label: "Pressure", key: "pres", units: "hPa" }
     ];
     
     //If no weather data was available, weather will be an empty object.
