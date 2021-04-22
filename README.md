@@ -4,6 +4,9 @@ For this app to work, you will require an API key for the weather data from http
 
 Once you have this key, go to the public folder. The key will need to be placed in a file, in the public folder, named api_settings.json. There is a file already there called api_settings.example.json -- this will show you what needs to be in the api_settings.json file.
 
+- On May 1st 2020, the Meteostat API (which provides the weather data) will be moving to V2. I have now modified this app to work with that new version.
+- The V2 Meteostat API was not allowing more than 20 requests every second. This was causing issues for the app, which is high in consecutive calls to that API (a station ID request, and then a weather request, for around 23 races). To solve this, I have split the race seasons into quarters, and you have to select a quarter when you do the search. This is a simplistic solution for now, but may be replaced with pagination in the future.
+
 Follow me at https://twitter.com/mattdarbs
 
 ## React Info
