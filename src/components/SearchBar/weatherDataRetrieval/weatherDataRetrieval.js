@@ -41,7 +41,7 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         
         
         //Now we need to check we don't already hold the requested year data.
-        const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year);
+        const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year, quarter);
         if(heldMatchingWeatherData.length > 0)
         {
             setSearchOutput(heldMatchingWeatherData);
@@ -50,16 +50,13 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         
         //If not already held, we need to get the data, and then add it to both the
         //weatherData state, and the searchOutput state.
-		const f1ResultLimit = (roundCountPerQuarter < 4) ? 
-														((quarter - 1) * roundCountPerQuarter) :
-														-1;
+		const f1ResultLimit = (quarter < 4) ? roundCountPerQuarter : -1;
         const f1DataOnly = await retrieveF1DataObject(year, quarter, f1ResultLimit); //This will return an empty array if it finds no races
         if(f1DataOnly.length === 0)
         {
-            setSearchOutput([getErrorDataObject("No race data available for this year.", false)]);
+            setSearchOutput([getErrorDataObject("No race data available for this year/quarter.", false)]);
             return;
         }
-        
         
         //Even though tracks can be used multiple times in a season,
         //there may be a newer weather station part way through the
