@@ -14,6 +14,8 @@ import getErrorDataObject from './getErrorDataObject';
 //output state.
 export default async function retrieveWeatherData(year, quarter, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
 {
+	const roundCountPerQuarter = 6; //How many races in the first 3 quarters?
+	
     try
     {
         //Get and validate the API settings.
@@ -48,7 +50,10 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         
         //If not already held, we need to get the data, and then add it to both the
         //weatherData state, and the searchOutput state.
-        const f1DataOnly = await retrieveF1DataObject(year); //This will return an empty array if it finds no races
+		const f1ResultLimit = (roundCountPerQuarter < 4) ? 
+														((quarter - 1) * roundCountPerQuarter) :
+														-1;
+        const f1DataOnly = await retrieveF1DataObject(year, quarter, f1ResultLimit); //This will return an empty array if it finds no races
         if(f1DataOnly.length === 0)
         {
             setSearchOutput([getErrorDataObject("No race data available for this year.", false)]);
