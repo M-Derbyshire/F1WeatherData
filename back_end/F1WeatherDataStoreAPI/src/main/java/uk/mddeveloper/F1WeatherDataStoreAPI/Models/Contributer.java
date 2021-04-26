@@ -28,7 +28,7 @@ public class Contributer {
 	private boolean active;
 	
 	
-	@OneToMany(mappedBy = "Round")
+	@OneToMany(mappedBy = "creator")
 	private List<Round> createdRounds;
 	
 	

@@ -19,7 +19,7 @@ public class Country {
 	
 	private String name;
 	
-	@OneToMany(mappedBy = "Circuit")
+	@OneToMany(mappedBy = "country")
 	private List<Circuit> circuits;
 	
 	

@@ -19,7 +19,7 @@ public class Weather {
 	
 	private String time;
 	
-	@OneToOne(mappedBy = "Round")
+	@OneToOne(mappedBy = "weather")
 	private Round round;
 	
 	//The variable names here are the names given to these values by the Meteostat weather API.

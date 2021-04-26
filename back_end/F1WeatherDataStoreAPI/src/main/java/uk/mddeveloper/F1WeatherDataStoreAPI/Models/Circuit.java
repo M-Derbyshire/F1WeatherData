@@ -33,7 +33,7 @@ public class Circuit {
 	
 	private String locality;
 	
-	@OneToMany(mappedBy = "Round")
+	@OneToMany(mappedBy = "circuit")
 	private List<Round> rounds;
 	
 	@ManyToOne
