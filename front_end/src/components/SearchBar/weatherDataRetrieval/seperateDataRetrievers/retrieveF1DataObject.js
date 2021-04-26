@@ -46,6 +46,6 @@ export default async function retrieveF1DataObject(year, quarter = 1, resultLimi
     }
     catch(e)
     {
-        throw Error("Error while fetching F1 data: " + e);
+        throw Error("Error while fetching F1 data: " + e.message);
     }
 }

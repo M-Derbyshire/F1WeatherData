@@ -29,6 +29,6 @@ export async function loadAPISettings(jsonPath)
     }
     catch(err)
     {
-        throw Error("Error while fetching settings data: " + err);
+        throw Error("Error while fetching settings data: " + err.message);
     }
 }

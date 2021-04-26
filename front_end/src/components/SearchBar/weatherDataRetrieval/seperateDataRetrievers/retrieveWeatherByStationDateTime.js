@@ -62,6 +62,6 @@ export default async function retrieveWeatherByStationDateTime(stationID, raceDa
     }
     catch(e)
     {
-        throw Error("Error while fetching weather data: " + e);
+        throw Error("Error while fetching weather data: " + e.message);
     }
 }

@@ -24,6 +24,6 @@ export default async function retrieveWeatherStationID(lat, long, apiKey)
     }
     catch(e)
     {
-        throw Error("Error while fetching weather station data: " + e);
+        throw Error("Error while fetching weather station data: " + e.message);
     }
 }

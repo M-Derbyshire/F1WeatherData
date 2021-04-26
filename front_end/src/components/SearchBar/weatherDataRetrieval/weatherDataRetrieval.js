@@ -104,7 +104,7 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
     }
     catch(e)
     {
-        setSearchOutput([getErrorDataObject("Error while retrieving weather data - " + e, true)]);
+        setSearchOutput([getErrorDataObject("Error while retrieving weather data - " + e.message, true)]);
         return;
     }
 }
