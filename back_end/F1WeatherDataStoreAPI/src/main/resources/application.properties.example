@@ -1,4 +1,5 @@
-spring.datasource.url=jdbc:mysql:127.0.0.1:3306/weatherdatastore
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/weatherdatastore
 spring.datasource.username=
 spring.datasource.password=
 spring.jpa.database-platform=org.hibernate.dialect.MySQLInnoDBDialect
+spring.jpa.hibernate.ddl-auto=none
