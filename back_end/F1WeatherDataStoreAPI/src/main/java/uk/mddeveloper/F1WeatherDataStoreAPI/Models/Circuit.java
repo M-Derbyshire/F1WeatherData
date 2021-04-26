@@ -20,7 +20,7 @@ public class Circuit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "api_id")
+	@Column(name = "api_id", nullable = true)
 	private String circuitId;
 	
 	@Column(name = "name")
@@ -31,6 +31,7 @@ public class Circuit {
 	@Column(name = "long")
 	private float lon;
 	
+	@Column(nullable = true)
 	private String locality;
 	
 	@OneToMany(mappedBy = "circuit")

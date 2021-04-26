@@ -17,6 +17,7 @@ public class Weather {
 	@Column(name = "weatherstation")
 	private String stationID;
 	
+	@Column(nullable = true)
 	private String time;
 	
 	@OneToOne(mappedBy = "weather")
@@ -26,38 +27,38 @@ public class Weather {
 	
 	
 
-	@Column(name = "airtemp")
-	private float temp;
+	@Column(name = "airtemp", nullable = true)
+	private Float temp;
 	
-	@Column(name = "dewpoint")
-	private float dwpt;
+	@Column(name = "dewpoint", nullable = true)
+	private Float dwpt;
 	
-	@Column(name = "relativehumidity")
-	private int rhum;
+	@Column(name = "relativehumidity", nullable = true)
+	private Integer rhum;
 	
-	@Column(name = "hourTotalPrecipitation")
-	private float prcp;
+	@Column(name = "hourtotalprecipitation", nullable = true)
+	private Float prcp;
 	
-	@Column(name = "snowdepth")
-	private int snow;
+	@Column(name = "snowdepth", nullable = true)
+	private Integer snow;
 	
-	@Column(name = "winddirection")
-	private int wdir;
+	@Column(name = "winddirection", nullable = true)
+	private Integer wdir;
 	
-	@Column(name = "avgwindspeed")
-	private float wspd;
+	@Column(name = "avgwindspeed", nullable = true)
+	private Float wspd;
 	
-	@Column(name = "peakwindgust")
-	private float wpgt;
+	@Column(name = "peakwindgust", nullable = true)
+	private Float wpgt;
 	
-	@Column(name = "airpressure")
-	private float pres;
+	@Column(name = "airpressure", nullable = true)
+	private Float pres;
 	
-	@Column(name = "hourtotalsunshine")
-	private int tsun;
+	@Column(name = "hourtotalsunshine", nullable = true)
+	private Integer tsun;
 	
-	@Column(name = "conditioncode")
-	private int coco;
+	@Column(name = "conditioncode", nullable = true)
+	private Integer coco;
 	
 	
 	

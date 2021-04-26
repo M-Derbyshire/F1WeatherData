@@ -24,8 +24,11 @@ public class Round {
 	@Column(name="racedate")
 	private String raceDate;
 	
-	@Column(name="racetimeutc")
+	@Column(name="racetimeutc", nullable = true)
 	private String raceTime;
+	
+	@Column(name="racename", nullable = true)
+	private String raceName;
 	
 	@OneToOne
 	@JoinColumn(name = "weatherid")
@@ -44,6 +47,7 @@ public class Round {
 	
 	
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -100,5 +104,13 @@ public class Round {
 		this.creator = creator;
 	}
 	
+	public String getRaceName() {
+		return raceName;
+	}
+
+	public void setRaceName(String raceName) {
+		this.raceName = raceName;
+	}
+
 	
 }
