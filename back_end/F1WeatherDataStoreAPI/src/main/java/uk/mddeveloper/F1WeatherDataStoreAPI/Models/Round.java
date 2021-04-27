@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Round {
 	
@@ -16,6 +18,7 @@ public class Round {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 	
 	@Column(name="number")
@@ -40,6 +43,7 @@ public class Round {
 	
 	@ManyToOne
 	@JoinColumn(name = "createdby")
+	@JsonIgnore
 	private Contributer creator;
 	
 	
