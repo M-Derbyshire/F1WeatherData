@@ -24,7 +24,7 @@ import uk.mddeveloper.F1WeatherDataStoreAPI.repositories.RoundRepository;
 import uk.mddeveloper.F1WeatherDataStoreAPI.repositories.WeatherRepository;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/rounds")
 public class RoundDataController {
 	
 	@Autowired
