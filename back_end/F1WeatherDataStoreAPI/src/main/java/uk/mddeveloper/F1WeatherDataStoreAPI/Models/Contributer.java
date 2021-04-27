@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -64,7 +62,7 @@ public class Contributer {
 	
 	
 	public void setPassword(String password) {
-		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+		this.password = password;
 	}
 
 	public boolean isActive() {
