@@ -13,7 +13,5 @@ public interface RoundRepository extends JpaRepository<Round, Long> {
      * Returns the rounds that match the given Quarter, and where the
      * raceDate contains the given string
      */
-	//@Query("select r from #{#entityName} r where r.quarter = ?1 and YEAR(r.raceDate) = ?2")
 	public List<Round> findByQuarterAndRaceDateContains(int quarter, String year);
-	
 }
