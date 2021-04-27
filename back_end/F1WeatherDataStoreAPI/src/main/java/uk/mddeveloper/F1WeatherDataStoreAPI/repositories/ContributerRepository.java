@@ -14,4 +14,9 @@ public interface ContributerRepository extends JpaRepository<Contributer, Long> 
      */
 	public Contributer findFirstBy();
 	
+	
+	/**
+     * Find the user by the email address
+     */
+	public Contributer findFirstByEmail(String email);
 }
