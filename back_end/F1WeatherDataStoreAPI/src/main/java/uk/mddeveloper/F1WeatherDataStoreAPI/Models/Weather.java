@@ -14,6 +14,7 @@ public class Weather {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private long id;
 	
 	@Column(name = "weatherstation")
