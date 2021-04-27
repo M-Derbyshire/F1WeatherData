@@ -53,7 +53,7 @@ public class RoundDataController {
 	@RequestMapping("{year}/{quarter}")
 	public List<Round> getByYearAndQuarter(@PathVariable String year, @PathVariable int quarter)
 	{
-		return roundRepo.findByQuarterAndRaceDateContains(quarter, year);
+		return roundRepo.findByQuarterAndRaceDateContainsOrderByRaceDateAsc(quarter, year);
 	}
 	
 	@PostMapping
