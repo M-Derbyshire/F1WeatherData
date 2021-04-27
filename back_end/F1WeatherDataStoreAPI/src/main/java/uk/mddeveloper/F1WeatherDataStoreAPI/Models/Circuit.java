@@ -31,7 +31,7 @@ public class Circuit {
 	
 	private float lat;
 	
-	@Column(name = "long")
+	@Column(name = "\"long\"")
 	private float lon;
 	
 	@Column(nullable = true)
