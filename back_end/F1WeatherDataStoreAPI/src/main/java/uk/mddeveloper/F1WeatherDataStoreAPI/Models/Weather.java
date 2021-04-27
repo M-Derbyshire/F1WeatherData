@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Weather {
 	
@@ -21,6 +23,7 @@ public class Weather {
 	private String time;
 	
 	@OneToOne(mappedBy = "weather")
+	@JsonIgnore
 	private Round round;
 	
 	//The variable names here are the names given to these values by the Meteostat weather API.

@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Contributer {
 	
@@ -29,6 +31,7 @@ public class Contributer {
 	
 	
 	@OneToMany(mappedBy = "creator")
+	@JsonIgnore
 	private List<Round> createdRounds;
 	
 	

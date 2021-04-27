@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Circuit {
 
@@ -35,6 +37,7 @@ public class Circuit {
 	private String locality;
 	
 	@OneToMany(mappedBy = "circuit")
+	@JsonIgnore
 	private List<Round> rounds;
 	
 	@ManyToOne
