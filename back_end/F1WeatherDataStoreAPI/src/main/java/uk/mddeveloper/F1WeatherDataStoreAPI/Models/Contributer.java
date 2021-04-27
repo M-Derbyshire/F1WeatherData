@@ -20,10 +20,12 @@ public class Contributer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private long id;
 	
 	private String email;
 	
+	@JsonIgnore
 	private String password;
 	
 	@Column(columnDefinition = "BIT")
