@@ -1,9 +1,13 @@
 package uk.mddeveloper.F1WeatherDataStoreAPI.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +43,27 @@ public class RoundDataController {
 	{
 		return roundRepo.findAll();
 	}
+	
+	@GetMapping
+	@RequestMapping("{year}/{quarter}")
+	public List<Round> getByYearAndQuarter(@PathVariable String year, @PathVariable int quarter)
+	{
+		return roundRepo.findByQuarterAndRaceDateContains(quarter, year);
+	}
+	
+//	@PostMapping
+//	public List<Round> create(@RequestBody final List<Round> rounds)
+//	{
+//		List<Round> response = new ArrayList<Round>(rounds.size());
+//		
+//		for(Round r : rounds)
+//		{
+//			response.add(roundRepo.save(r));
+//		}
+//		
+//		roundRepo.flush();
+//		
+//		return response;
+//	}
 	
 }
