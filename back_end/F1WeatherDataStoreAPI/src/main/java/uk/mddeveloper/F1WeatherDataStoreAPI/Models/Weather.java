@@ -91,91 +91,91 @@ public class Weather {
 		this.time = time;
 	}
 
-	public float getTemp() {
+	public Float getTemp() {
 		return temp;
 	}
 
-	public void setTemp(float temp) {
+	public void setTemp(Float temp) {
 		this.temp = temp;
 	}
 
-	public float getDwpt() {
+	public Float getDwpt() {
 		return dwpt;
 	}
 
-	public void setDwpt(float dwpt) {
+	public void setDwpt(Float dwpt) {
 		this.dwpt = dwpt;
 	}
 
-	public int getRhum() {
+	public Integer getRhum() {
 		return rhum;
 	}
 
-	public void setRhum(int rhum) {
+	public void setRhum(Integer rhum) {
 		this.rhum = rhum;
 	}
 
-	public float getPrcp() {
+	public Float getPrcp() {
 		return prcp;
 	}
 
-	public void setPrcp(float prcp) {
+	public void setPrcp(Float prcp) {
 		this.prcp = prcp;
 	}
 
-	public int getSnow() {
+	public Integer getSnow() {
 		return snow;
 	}
 
-	public void setSnow(int snow) {
+	public void setSnow(Integer snow) {
 		this.snow = snow;
 	}
 
-	public int getWdir() {
+	public Integer getWdir() {
 		return wdir;
 	}
 
-	public void setWdir(int wdir) {
+	public void setWdir(Integer wdir) {
 		this.wdir = wdir;
 	}
 
-	public float getWspd() {
+	public Float getWspd() {
 		return wspd;
 	}
 
-	public void setWspd(float wspd) {
+	public void setWspd(Float wspd) {
 		this.wspd = wspd;
 	}
 
-	public float getWpgt() {
+	public Float getWpgt() {
 		return wpgt;
 	}
 
-	public void setWpgt(float wpgt) {
+	public void setWpgt(Float wpgt) {
 		this.wpgt = wpgt;
 	}
 
-	public float getPres() {
+	public Float getPres() {
 		return pres;
 	}
 
-	public void setPres(float pres) {
+	public void setPres(Float pres) {
 		this.pres = pres;
 	}
 
-	public int getTsun() {
+	public Integer getTsun() {
 		return tsun;
 	}
 
-	public void setTsun(int tsun) {
+	public void setTsun(Integer tsun) {
 		this.tsun = tsun;
 	}
 
-	public int getCoco() {
+	public Integer getCoco() {
 		return coco;
 	}
 
-	public void setCoco(int coco) {
+	public void setCoco(Integer coco) {
 		this.coco = coco;
 	}
 	
