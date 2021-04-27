@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +20,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtUtil {
 	
-	@Autowired
-	private Environment env;
-	
-	private String SIGNING_KEY = env.getProperty("jwt-signing-key");
+	@Value("jwt-signing-key")
+	private String SIGNING_KEY;
 	
 	private Date getTokenExpirationDate()
 	{
