@@ -27,6 +27,8 @@ public class Round {
 	@Column(name="racedate")
 	private String raceDate;
 	
+	private int quarter;
+
 	@Column(name="racetimeutc", nullable = true)
 	private String raceTime;
 	
@@ -114,6 +116,14 @@ public class Round {
 
 	public void setRaceName(String raceName) {
 		this.raceName = raceName;
+	}
+	
+	public int getQuarter() {
+		return quarter;
+	}
+
+	public void setQuarter(int quarter) {
+		this.quarter = quarter;
 	}
 
 	
