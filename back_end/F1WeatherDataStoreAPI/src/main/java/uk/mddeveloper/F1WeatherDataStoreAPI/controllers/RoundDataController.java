@@ -42,13 +42,6 @@ public class RoundDataController {
 	@Autowired
 	private WeatherRepository weatherRepo;
 	
-	
-	@GetMapping
-	public List<Round> list()
-	{
-		return roundRepo.findAll();
-	}
-	
 	@GetMapping
 	@RequestMapping("{year}/{quarter}")
 	public List<Round> getByYearAndQuarter(@PathVariable String year, @PathVariable int quarter)
