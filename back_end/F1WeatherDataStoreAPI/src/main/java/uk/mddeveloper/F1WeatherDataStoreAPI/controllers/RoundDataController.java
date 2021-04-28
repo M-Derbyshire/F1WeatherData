@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,8 +80,10 @@ public class RoundDataController {
 				}
 				
 				
-				//For now, we're just using the only user we have as the creator
-				Contributer creator = contributorRepo.findFirstBy();
+				//Now we want to get the authenticated user and attach them to the round
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				Contributer creator = 
+						contributorRepo.findFirstByEmailAndActive((String) auth.getName(), true);
 				r.setCreator(creator);
 				
 				
