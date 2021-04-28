@@ -44,53 +44,75 @@ public class RoundDataController {
 	
 	@GetMapping
 	@RequestMapping("{year}/{quarter}")
-	public List<Round> getByYearAndQuarter(@PathVariable String year, @PathVariable int quarter)
+	public List<Round> getByYearAndQuarter(@PathVariable String year, @PathVariable int quarter) throws Exception
 	{
-		return roundRepo.findByQuarterAndRaceDateContainsOrderByRaceDateAsc(quarter, year);
+		List<Round> matchingRounds;
+		
+		try
+		{
+			matchingRounds = roundRepo.findByQuarterAndRaceDateContainsOrderByRaceDateAsc(quarter, year);
+		}
+		catch(Exception e)
+		{
+			throw new Exception("Error while retrieving race/weather data.", e);
+		}
+		
+		return matchingRounds;
 	}
 	
 	@PostMapping
-	public List<Round> create(@RequestBody final List<Round> rounds)
+	public List<Round> create(@RequestBody final List<Round> rounds) throws Exception
 	{
 		List<Round> responseRounds = new ArrayList<Round>(rounds.size());
 		
-		for(Round r : rounds)
+		try
 		{
-			//First, does this round exist already?
-			List<Round> matchingRounds = roundRepo.findByQuarterAndRaceDateContains(r.getQuarter(), r.getRaceDate());
-			if(matchingRounds.size() > 0)
+			for(Round r : rounds)
 			{
-				responseRounds.add(matchingRounds.get(0));
-				continue;
+				//First, does this round exist already?
+				List<Round> matchingRounds = roundRepo.findByQuarterAndRaceDateContains(r.getQuarter(), r.getRaceDate());
+				if(matchingRounds.size() > 0)
+				{
+					responseRounds.add(matchingRounds.get(0));
+					continue;
+				}
+				
+				
+				//For now, we're just using the only user we have as the creator
+				Contributer creator = contributorRepo.findFirstBy();
+				r.setCreator(creator);
+				
+				
+				//The round also needs a circuit
+				r.setCircuit(getOrSaveRelevantCircuit(r.getCircuit()));
+				
+				
+				//Create the Weather record, if data is available
+				if(r.getWeather() != null)
+				{
+					weatherRepo.saveAndFlush(r.getWeather());
+				}
+				
+				responseRounds.add(roundRepo.save(r));
 			}
 			
-			
-			//For now, we're just using the only user we have as the creator
-			Contributer creator = contributorRepo.findFirstBy();
-			r.setCreator(creator);
-			
-			
-			//The round also needs a circuit
-			r.setCircuit(getOrSaveRelevantCircuit(r.getCircuit()));
-			
-			
-			//Create the Weather record, if data is available
-			if(r.getWeather() != null)
-			{
-				weatherRepo.saveAndFlush(r.getWeather());
-			}
-			
-			responseRounds.add(roundRepo.save(r));
+			roundRepo.flush();
+		
+		}
+		catch(Exception e)
+		{
+			//Nothing is really saved until flush() is called, so no rolling back
+			//is required here.
+			throw new Exception("Error while adding race/weather data.", e);
 		}
 		
-		roundRepo.flush();
 		return responseRounds;
 	}
 	
 	
 	
 	
-	private Circuit getOrSaveRelevantCircuit(Circuit providedCircuit)
+	private Circuit getOrSaveRelevantCircuit(Circuit providedCircuit) throws Exception
 	{
 		//We will need the actual PK, which we currently won't have (circuitId is a different field)
 		Circuit foundCircuit = circuitRepo.findFirstByCircuitId(providedCircuit.getCircuitId());

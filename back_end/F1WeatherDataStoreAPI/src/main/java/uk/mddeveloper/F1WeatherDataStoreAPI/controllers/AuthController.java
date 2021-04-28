@@ -33,9 +33,13 @@ public class AuthController {
 	@PostMapping(path = "", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest authRequest) throws Exception 
 	{
+		String jwt;
+		
 		try
 		{
 			authManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+			final UserDetails user = userDetailsService.loadUserByUsername(authRequest.getUsername());
+			jwt = jwtUtil.generateToken(user);
 		}
 		catch (BadCredentialsException e)
 		{
@@ -43,11 +47,12 @@ public class AuthController {
 		}
 		catch (AuthenticationException e)
 		{
-			throw new Exception("Authentication error: ", e);
+			throw new Exception("Error while authenticating user: ", e);
 		}
-		
-		final UserDetails user = userDetailsService.loadUserByUsername(authRequest.getUsername());
-		final String jwt = jwtUtil.generateToken(user);
+		catch (Exception e)
+		{
+			throw new Exception("Error during authentication process: ", e);
+		}
 		
 		return ResponseEntity.ok(new AuthResponse(jwt));
 	}
