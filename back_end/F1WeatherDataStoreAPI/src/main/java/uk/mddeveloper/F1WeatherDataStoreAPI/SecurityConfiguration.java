@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import uk.mddeveloper.F1WeatherDataStoreAPI.filters.JwtRequestFilter;
 import uk.mddeveloper.F1WeatherDataStoreAPI.services.ContributerDetailsService;
 
 @Configuration
@@ -21,6 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ContributerDetailsService userDetailsService;
 	
+	@Autowired
+	private JwtRequestFilter jwtRequestFilter;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
@@ -28,7 +34,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 			.antMatchers("/api/v1/rounds/*/*").permitAll()
-			.antMatchers(HttpMethod.POST, "/api/v1/auth").permitAll();
+			.antMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+			.anyRequest().authenticated()
+			//Don't create session (as we're using JWT
+			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
+		//Filter to check for JWT
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Override
