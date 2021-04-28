@@ -16,7 +16,7 @@ public interface ContributerRepository extends JpaRepository<Contributer, Long> 
 	
 	
 	/**
-     * Find the user by the email address
+     * Find the user by the email address, and by their active flag
      */
-	public Contributer findFirstByEmail(String email);
+	public Contributer findFirstByEmailAndActive(String email, boolean active);
 }

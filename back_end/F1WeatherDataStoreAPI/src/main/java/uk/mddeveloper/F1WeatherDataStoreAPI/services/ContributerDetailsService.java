@@ -21,7 +21,7 @@ public class ContributerDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
-		Contributer cont = contributerRepo.findFirstByEmail(email);
+		Contributer cont = contributerRepo.findFirstByEmailAndActive(email, true);
 		
 		return new User(cont.getEmail(), cont.getPassword(), new ArrayList<>());
 	}
