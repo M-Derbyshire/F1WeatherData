@@ -1,6 +1,6 @@
 .NavBar {
 	margin: 0.5em;
-	max-width: 30em;
+	max-width: 40em;
     padding: 0.5em;
 	text-align: center;
     background-color: #e6e6e6;
@@ -30,7 +30,7 @@ a:hover {
 }
 
 
-@media (min-width: 500px) {
+@media (min-width: 560px) {
 	.NavBar {
 		/* Make the navbar centered */
 		margin: 0.5em auto;
