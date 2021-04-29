@@ -35,6 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//If implementing this site for real, would only allow the actual domain.
 		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		
+		http.csrf().ignoringAntMatchers("/**");
+		
 		http.authorizeRequests()
 			.antMatchers("/api/v1/rounds/*/*").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
