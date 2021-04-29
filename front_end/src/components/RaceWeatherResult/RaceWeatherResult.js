@@ -1,23 +1,6 @@
 import React from 'react';
 import './RaceWeatherResult.css';
-import WeatherStat from './WeatherStat/WeatherStat';
-
-
-/*
-If switching the weather data API method to daily, rather than hourly, use the below:
-
-const weatherStatData = [
-        { label: "Temperature", key: "temperature", units: "°C" },
-        { label: "Precipitation", key: "precipitation", units: "mm" },
-        { label: "Snowfall", key: "snowfall", units: "mm" },
-        { label: "Snow Depth", key: "snowdepth", units: "mm" },
-        { label: "Wind Direction", key: "winddirection", units: "°" },
-        { label: "Wind Speed", key: "windspeed", units: "km/h" },
-        { label: "Sunshine Duration", key: "sunshine", units: " hours" },
-        { label: "Pressure", key: "pressure", units: "hPa" }
-    ];
-*/
-
+import WeatherStat from '../WeatherStat/WeatherStat';
 
 
 // Props:
