@@ -7,6 +7,7 @@ import APIReferences from '../APIReferences/APIReferences';
 import WeatherSearch from '../WeatherSearch/WeatherSearch';
 import AboutInfo from '../AboutInfo/AboutInfo';
 import RouteNotFoundMessage from '../RouteNotFoundMessage/RouteNotFoundMessage';
+import LoginForm from '../LoginForm/LoginForm';
 
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
 					
 					<Route exact path="/about">
 						<AboutInfo />
+					</Route>
+					
+					<Route exact path="/login">
+						<LoginForm />
 					</Route>
 					
 					<Route path="/">
