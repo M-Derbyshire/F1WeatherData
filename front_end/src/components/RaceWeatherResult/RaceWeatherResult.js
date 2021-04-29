@@ -29,10 +29,12 @@ function RaceWeatherResult(props)
         { label: "Pressure", key: "pres", units: "hPa" }
     ];
     
-    //If no weather data was available, weather will be an empty object.
-    //Therefore, display a message if no weather data.
-    const weatherStats = (Object.keys(weather).length > 0) ? (
-        <div className="weatherStatContainer">
+    //If no weather data was available, weather will be an empty object (or null, if it came from 
+	//the local API). Therefore, display a message if no weather data.
+    let weatherStats;
+	if(weather && Object.keys(weather).length > 0)
+	{
+        weatherStats= (<div className="weatherStatContainer">
             {
                 weatherStatData.reduce((providedStats, stat) => {
                     if(weather.hasOwnProperty(stat.key))
@@ -50,12 +52,14 @@ function RaceWeatherResult(props)
                     return providedStats;
                 }, [])
             }
-        </div>
-    ) : (
-        <div className="weatherStatContainer">
+        </div>);
+	 }
+	 else
+	 {
+		 weatherStats = (<div className="weatherStatContainer">
             <span className="noWeatherAvailableMessage">No Weather Data Available for this Race.</span>
-        </div>
-    );
+        </div>);
+	 }
     
     return (
         <div className="RaceWeatherResult">
