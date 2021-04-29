@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import uk.mddeveloper.F1WeatherDataStoreAPI.filters.JwtRequestFilter;
 import uk.mddeveloper.F1WeatherDataStoreAPI.services.ContributerDetailsService;
@@ -30,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
-		http.cors().and().csrf().disable(); //Might decide against CORS disabled and change later
+		//For now, allowing all cross-site requests.
+		//If implementing this site for real, would only allow the actual domain.
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 		
 		http.authorizeRequests()
 			.antMatchers("/api/v1/rounds/*/*").permitAll()
