@@ -41,7 +41,7 @@ function App() {
 					</Route>
 					
 					<Route exact path="/login">
-						<LoginForm />
+						<LoginForm apiSettingsState={apiSettingsState} />
 					</Route>
 					
 					<Route path="/">

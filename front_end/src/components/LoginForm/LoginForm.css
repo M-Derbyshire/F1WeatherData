@@ -26,3 +26,10 @@
 	margin: 1rem;
 	font-size: 1.5em;
 }
+
+.LoginForm .loginError {
+	font-size: 1.25em;
+	margin: 1em;
+	padding: 0.25em;
+	color: red;
+}
