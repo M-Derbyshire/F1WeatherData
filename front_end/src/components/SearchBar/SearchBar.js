@@ -1,6 +1,6 @@
 import React from 'react';
 import './SearchBar.css';
-import retrieveWeatherData from './weatherDataRetrieval/weatherDataRetrieval';
+import retrieveWeatherData from '../../dataRetrieval/weatherDataRetrieval';
 
 // Props: 
 // weatherDataState - array of the state and set-state-function for the weatherData
