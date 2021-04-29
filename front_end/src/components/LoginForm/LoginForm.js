@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
 import getAPISettings from '../../dataRetrieval/seperateDataRetrievers/getAPISettings';
+import getAuthJWT from '../../authentication/getAuthJWT';
 
 export default function LoginForm(props)
 {
@@ -12,10 +13,13 @@ export default function LoginForm(props)
 		
 		e.preventDefault();
 		
-		//This function does the check to see if we already have them loaded
+		const username = document.getElementById("emailAddressInput").value;
+		const passwordInput = document.getElementById("passwordInput");
+		const password = passwordInput.value;
 		
 		try
 		{
+			//This function does the check to see if we already have them loaded
 			const currentApiSettings = await getAPISettings(apiSettings);
 			setApiSettings(currentApiSettings);
 			
@@ -25,12 +29,26 @@ export default function LoginForm(props)
 				return;
 			}
 			
+			try
+			{
+				currentApiSettings.authHeader = "Bearer " + await getAuthJWT(username, password, currentApiSettings.local_api_base_address);
+				
+				setApiSettings(currentApiSettings);
+				setLoginErrorMessage(false);
+			}
+			catch(err)
+			{
+				//This may say that the login details were incorrect, or it may say it was a connection issue.
+				setLoginErrorMessage(err.message);
+			}
 			
 		}
 		catch(err)
 		{
 			setLoginErrorMessage("Sorry, but their was an error while connecting to the contributers system. Please try again later.");
 		}
+		
+		passwordInput.value = "";
 		
 	}
 	

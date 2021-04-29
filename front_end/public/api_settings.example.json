@@ -1,5 +1,5 @@
 {
     "oldest_year_available": "1980",
     "meteostat_API_key": "your API key for api.meteostat.net",
-    "local_api_base_address": "localhost:8080/api/v1/"
+    "local_api_base_address": "http://localhost:8080/api/v1/"
 }
