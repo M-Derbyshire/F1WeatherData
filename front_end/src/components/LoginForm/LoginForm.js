@@ -4,11 +4,11 @@ import './LoginForm.css';
 import getAPISettings from '../../dataRetrieval/seperateDataRetrievers/getAPISettings';
 import getAuthJWT from '../../authentication/getAuthJWT';
 
-//Takes 2 props: apiSettingsState and authHeaderState
+//Takes 2 props: apiSettingsState and setAuthHeader
 export default function LoginForm(props)
 {
-	let [apiSettings, setApiSettings] = props.apiSettingsState;
-	let [authHeader, setAuthHeader] = props.authHeaderState;
+	const [apiSettings, setApiSettings] = props.apiSettingsState;
+	const setAuthHeader = props.setAuthHeader;
 	const [loginErrorMessage, setLoginErrorMessage] = useState(false);
 	let history = useHistory();
 	

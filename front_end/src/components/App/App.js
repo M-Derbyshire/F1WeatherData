@@ -44,7 +44,7 @@ function App() {
 					</Route>
 					
 					<Route exact path="/login">
-						<LoginForm apiSettingsState={apiSettingsState} authHeaderState={authHeaderState} />
+						<LoginForm apiSettingsState={apiSettingsState} setAuthHeader={authHeaderState[1]} />
 					</Route>
 					
 					<Route path="/">
