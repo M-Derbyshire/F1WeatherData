@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './LoginForm.css';
 import getAPISettings from '../../dataRetrieval/seperateDataRetrievers/getAPISettings';
 import getAuthJWT from '../../authentication/getAuthJWT';
@@ -6,8 +7,8 @@ import getAuthJWT from '../../authentication/getAuthJWT';
 export default function LoginForm(props)
 {
 	let [apiSettings, setApiSettings] = props.apiSettingsState;
-	
 	const [loginErrorMessage, setLoginErrorMessage] = useState(false);
+	let history = useHistory();
 	
 	const loginHandler = async (e) => {
 		
@@ -35,6 +36,9 @@ export default function LoginForm(props)
 				
 				setApiSettings(currentApiSettings);
 				setLoginErrorMessage(false);
+				
+				//Redirect to home
+				history.push("/");
 			}
 			catch(err)
 			{
