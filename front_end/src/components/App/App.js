@@ -15,6 +15,9 @@ function App() {
 	//The apiSettings, loaded from api_settings.json
     const apiSettingsState = useState(null);
 	
+	//The header value if the user is authenticated (with the JWT)
+	const authHeaderState = useState(null);
+	
 	const [weatherData, setWeatherData] = useState([]);
 	const [searchResultData, setSearchResultData] = useState([]);
 	const [isRetrievingData, setIsRetrievingData] = useState(false);
@@ -24,12 +27,12 @@ function App() {
 		searchResultDataState: [searchResultData, setSearchResultData],
 		isRetrievingDataState: [isRetrievingData, setIsRetrievingData]
 	};
-
+	
 	return (
 		<Router>
 			<div className="App">
 				
-				<NavBar />
+				<NavBar authHeader={authHeaderState[0]} />
 				
 				<Switch>
 					<Route exact path="/">
@@ -41,7 +44,7 @@ function App() {
 					</Route>
 					
 					<Route exact path="/login">
-						<LoginForm apiSettingsState={apiSettingsState} />
+						<LoginForm apiSettingsState={apiSettingsState} authHeaderState={authHeaderState} />
 					</Route>
 					
 					<Route path="/">

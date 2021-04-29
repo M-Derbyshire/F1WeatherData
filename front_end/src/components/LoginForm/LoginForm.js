@@ -4,9 +4,11 @@ import './LoginForm.css';
 import getAPISettings from '../../dataRetrieval/seperateDataRetrievers/getAPISettings';
 import getAuthJWT from '../../authentication/getAuthJWT';
 
+//Takes 2 props: apiSettingsState and authHeaderState
 export default function LoginForm(props)
 {
 	let [apiSettings, setApiSettings] = props.apiSettingsState;
+	let [authHeader, setAuthHeader] = props.authHeaderState;
 	const [loginErrorMessage, setLoginErrorMessage] = useState(false);
 	let history = useHistory();
 	
@@ -32,9 +34,7 @@ export default function LoginForm(props)
 			
 			try
 			{
-				currentApiSettings.authHeader = "Bearer " + await getAuthJWT(username, password, currentApiSettings.local_api_base_address);
-				
-				setApiSettings(currentApiSettings);
+				setAuthHeader("Bearer " + await getAuthJWT(username, password, currentApiSettings.local_api_base_address));
 				setLoginErrorMessage(false);
 				
 				//Redirect to home
