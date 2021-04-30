@@ -12,7 +12,7 @@ export default async function getAuthJWT(username, password, apiBaseURL)
 	try
 	{
 		response = await fetch(apiURL, {
-			method: 'POST', // or 'PUT'
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
