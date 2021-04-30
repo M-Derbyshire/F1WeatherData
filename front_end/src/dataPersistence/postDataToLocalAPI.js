@@ -23,12 +23,13 @@ export default async function postDataToLocalAPI(data, authHeader, apiBaseURL)
 		
 		if(!response.ok)
 		{
-			throw new Error("The server returned a bad response to the POST request.");
+			throw "The server returned a bad response to the POST request.";
 		}
 	}
 	catch(err)
 	{
-		throw new Error("Error connecting to local API - " + err.message);
+		//We don't really want to both the user with this error
+		console.log("Error connecting to local API - " + err);
 	}
 }
 
