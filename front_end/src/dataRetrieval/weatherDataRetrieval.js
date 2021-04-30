@@ -7,6 +7,7 @@ import retrieveWeatherStationID from './seperateDataRetrievers/retrieveWeatherSt
 import retrieveWeatherByStationDateTime from './seperateDataRetrievers/retrieveWeatherByStationDateTime';
 import getErrorDataObject from './getErrorDataObject';
 import postDataToLocalAPI from '../dataPersistence/postDataToLocalAPI';
+import getDataFromLocalAPI from './seperateDataRetrievers/getDataFromLocalAPI';
 
 //Requires: the year for the data that is requested; the quarter (1, 2, 3 or 4) of 
 //the season for the request; the apiSettings hook;
@@ -24,6 +25,8 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         setApiSettings(apiSettings); //Finally, keep the loaded settings for future searches
         
         
+		
+		
         //Validate the year input, and alert the user if it isn't valid
         const yearValidationResult = validateYearInput(year, apiSettings.oldest_year_available);
         if(yearValidationResult !== "valid")
@@ -38,9 +41,10 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
             alert(`Unfortunately, the given quarter value ("${quarter}") is incorrect.`);
             return;
         }
-        
-        
-        
+		
+		
+		
+		
         //Now we need to check we don't already hold the requested year data.
         const heldMatchingWeatherData = getMatchingHeldWeatherData(weatherData, year, quarter);
         if(heldMatchingWeatherData.length > 0)
@@ -49,8 +53,36 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
             return;
         }
         
-        //If not already held, we need to get the data, and then add it to both the
-        //weatherData state, and the searchOutput state.
+		
+		
+		
+		//If we don't already hold the requested data in memory, we may hold it in the local DB
+		if(apiSettings.local_api_base_address)
+		{
+			try
+			{
+				const locallyStoredMatchingWeatherData = await getDataFromLocalAPI(year, quarter, apiSettings.local_api_base_address);
+				if(locallyStoredMatchingWeatherData.length > 0)
+				{
+					setWeatherData([
+						...weatherData,
+						...locallyStoredMatchingWeatherData
+					]);
+					setSearchOutput(locallyStoredMatchingWeatherData);
+					return;
+				}
+			}
+			catch(err)
+			{
+				//We don't want to disrupt the process here, if this has an issue
+				console.log(err.message);
+			}
+		}
+		
+		
+		
+        //If not already held in memory, or in the local database, we need to get the data, and then add 
+		//it to both the weatherData state, and the searchOutput state.
 		const f1ResultLimit = (quarter < 4) ? roundCountPerQuarter : -1;
         const f1DataOnly = await retrieveF1DataObject(year, quarter, f1ResultLimit); //This will return an empty array if it finds no races
         if(f1DataOnly.length === 0)
@@ -97,6 +129,8 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
         
 		
 		
+		
+		
 		//If we successfully got new data, we want to send it to the local API.
 		if(authHeader && apiSettings.local_api_base_address)
 		{
@@ -111,6 +145,9 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
 			}
 			
 		}
+		
+		
+		
 		
         //Finally, set the weatherData and searchOutput
         setWeatherData([

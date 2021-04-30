@@ -33,6 +33,10 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
             }),
             { status: 200 }
         ],
+		[
+			//The local API response
+			"[]"
+		],
         [
             //The F1 data for a single race
             String.raw`{"MRData":{"xmlns":"http:\/\/ergast.com\/mrd\/1.4","series":"f1",
@@ -222,17 +226,21 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
         meteostat_API_key: ""
     })
     
-    fetch.mockResponseOnce(JSON.stringify({
-        MRData:{
-            xmlns:"http:\/\/ergast.com\/mrd\/1.4", 
-            series:"f1",
-            url:"http://ergast.com/api/f1/1930/races.json",
-            limit:"30",
-            offset:"0",
-            total:"0",
-            RaceTable:{season:"1930",Races:[]}
-        }
-    }));
+    fetch.mockResponses(
+		[
+			JSON.stringify({
+				MRData:{
+					xmlns:"http:\/\/ergast.com\/mrd\/1.4", 
+					series:"f1",
+					url:"http://ergast.com/api/f1/1930/races.json",
+					limit:"30",
+					offset:"0",
+					total:"0",
+					RaceTable:{season:"1930",Races:[]}
+				}
+			})
+		]
+    );
     
     let searchOutput = [];
     const setSearchOutputWithErrorObject = (val) => {
@@ -242,7 +250,6 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
     
     
     await retrieveWeatherData(year, quarter, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject, authHeader);
-    
     
     expect(searchOutput.length).toBe(1);
     expect(searchOutput[0]).toHaveProperty("error");

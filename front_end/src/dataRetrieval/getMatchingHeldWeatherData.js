@@ -2,6 +2,7 @@ export default function getMatchingHeldWeatherData(weatherData, year, quarter = 
 {
     let heldMatchingWeatherData = [];
     
+	//weatherData is a collection, not an array, so not using filter
     for(let i = 0; i < weatherData.length; i++)
     {
         if(weatherData[i].year === year && weatherData[i].quarter === quarter)
