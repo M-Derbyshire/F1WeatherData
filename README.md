@@ -30,5 +30,5 @@ For this app to work, you will first need to set up the MySQL database. In the *
 
 You will then need to create an *application.properties* file in the Spring Boot project's */src/main/resources* directory. There is a file in there called *application.properties.example*, which contains examples of the settings that will need to be populated in the *application.properties* file.
 
-[See my Portfolio](http://md-developer.uk/) 
-[Follow me on Twitter](https://twitter.com/mattdarbs) 
+[Follow me on Twitter](http://twitter.com/mattdarbs)  
+[See my Portfolio](http://md-developer.uk)
