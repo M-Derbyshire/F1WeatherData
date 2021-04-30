@@ -4,12 +4,20 @@
 //This will throw an exception if there is an issue connecting to the API
 export default async function postDataToLocalAPI(data, authHeader, apiBaseURL)
 {
-	if(!apiBaseURL.endsWith("/")) apiBaseURL += "/";
+	//If we have no authHeader or apiBaseURL we can't make the request
+	if(!authHeader) 
+	{
+		throw new Error("Cannot POST to local API, as no Authorization header has been provided.");
+	}
+	if(!apiBaseURL) 
+	{
+		throw new Error("Cannot POST to local API, as no address for the API has been provided.");
+	}
+	
+	if(!apiBaseURL || !apiBaseURL.endsWith("/")) apiBaseURL += "/";
 	const apiURL = apiBaseURL + "rounds";
 	
-	const newData = data.map((d) => {
-		return map3rdPartyDataToLocalAPIObject(d);
-	});
+	const newData = data.map(map3rdPartyDataToLocalAPIObject);
 	
 	try
 	{
@@ -17,19 +25,19 @@ export default async function postDataToLocalAPI(data, authHeader, apiBaseURL)
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
+				'Authorization': authHeader
 			},
 			body: JSON.stringify(newData)
 		});
 		
 		if(!response.ok)
 		{
-			throw "The server returned a bad response to the POST request.";
+			throw new Error("The server returned a bad response to the POST request.");
 		}
 	}
 	catch(err)
 	{
-		//We don't really want to both the user with this error
-		console.log("Error connecting to local API - " + err);
+		throw new Error("Error connecting to local API - " + err.message);
 	}
 }
 
@@ -41,7 +49,8 @@ export function map3rdPartyDataToLocalAPIObject(data)
 		quarter: data.quarter,
 		raceDate: data.raceDate,
 		raceName: data.raceName,
-		raceTime: data.raceTime,
+		raceTime: (data.raceTime.charAt(data.raceTime.length - 1).toLowerCase() === "z") ? 
+											data.raceTime.slice(0, -1) : data.raceTime,
 		round: data.round,
 		circuit: {
 			circuitId: data.circuitId,
@@ -58,7 +67,7 @@ export function map3rdPartyDataToLocalAPIObject(data)
 	
 	if(Object.keys(data.weather).length > 0)
 	{
-		newData.weather = data.weather;
+		newData.weather = { ...data.weather }; //copying this, so we don't mutate it with the below addition
 		newData.weather.stationID = data.stationID;
 	}
 	

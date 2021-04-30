@@ -10,6 +10,11 @@ const setApiSettings = (val) => {};
 const setWeatherData = (val) => {};
 const setSearchOutput = (val) => {};
 
+const authHeader = "Bearer: test";
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if given a valid year", async () => {
     
@@ -23,7 +28,8 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
         [
             JSON.stringify({ //Settings JSON
                 oldest_year_available: "1980",
-                meteostat_API_key: ""
+                meteostat_API_key: "",
+				local_api_base_address: "/"
             }),
             { status: 200 }
         ],
@@ -47,12 +53,12 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
         [
             //Weather by station and date.
             String.raw`{"meta":{"source":"National Oceanic and Atmospheric Administration, Deutscher Wetterdienst"},
-            "data":[{"time":"2008-03-16 04:00:00", "time_local":"2008-03-16 05:00:00", "temperature":12.2,
-                "dewpoint":7.9, "humidity":75, "precipitation":0.1, "precipitation_3":null, "precipitation_6":null,
-                "snowdepth":null, "windspeed":0, "peakgust":16.7, "winddirection":270, "pressure":1016, 
-                "condition":4}]}`,
+            "data":[{"time":"2008-03-16 04:00:00","temp":12.2,"dwpt":7.9,"rhum":75,"prcp":0.1,"snow":null,"wspd":0,"wpgt":16.7,"wdir":270,"pres":1016,"coco":4}]}`,
             {status: 200}
-        ]
+        ],
+		[
+			{status: 200} //for the local API
+		]
     );
     
     //A year after the one we're retrieving
@@ -93,19 +99,16 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
             weather:
             { 
                 time:"2008-03-16 04:00:00",
-                time_local:"2008-03-16 05:00:00",
-                temperature:12.2,
-                dewpoint:7.9,
-                humidity:75,
-                precipitation:0.1,
-                precipitation_3:null,
-                precipitation_6:null,
-                snowdepth:null,
-                windspeed:0,
-                peakgust:16.7,
-                winddirection:270,
-                pressure:1016,
-                condition:4 
+                temp:12.2,
+                dwpt:7.9,
+                rhum:75,
+                prcp:0.1,
+                snow:null,
+                wspd:0,
+                wpgt:16.7,
+                wdir:270,
+                pres:1016,
+                coco:4 
             } 
         }
     ];
@@ -116,7 +119,7 @@ test("retrieveWeatherData will set the 'weatherData' and 'searchOutput' state if
     ];
     
     
-    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, currentWeatherData, setWeatherData, setSearchOutput, authHeader);
     
     expect(setWeatherData).toHaveBeenCalledWith(expect.arrayContaining(expectedWeatherDataStateResult));
     expect(setSearchOutput).toHaveBeenCalledWith(expect.arrayContaining(expectedOutputResult));
@@ -137,7 +140,7 @@ test("retrieveWeatherData will call displayInvalidYearAlert() if given an incorr
     
     
     
-    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput, authHeader);
     
     
     //Cannot mock displayInvalidYearAlert(), as it's nested, so just check an alert was raised
@@ -171,7 +174,7 @@ test("retrieveWeatherData will call setSearchOutput if getMatchingHeldWeatherDat
     const year = "2020";
 	const quarter = 1;
     
-    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, weatherData, setWeatherData, mockedSetSearchOutput, authHeader);
     expect(mockedSetSearchOutput).toHaveBeenCalledWith(expectedWeatherData);
 });
 
@@ -193,7 +196,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error ob
 	const year = "2020";
 	const quarter = 1;
     
-    await retrieveWeatherData(year, quarter, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(year, quarter, apiSettings, throwWhenSettingAPISettings, {}, setWeatherData, setSearchOutputWithErrorObject, authHeader);
     
     
     expect(searchOutput.length).toBe(1);
@@ -238,7 +241,7 @@ test("retrieveWeatherData will set the searchOutput to an array with an error me
     
     
     
-    await retrieveWeatherData(year, quarter, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject);
+    await retrieveWeatherData(year, quarter, preLoadedApiSettings, setApiSettings, {}, setWeatherData, setSearchOutputWithErrorObject, authHeader);
     
     
     expect(searchOutput.length).toBe(1);
@@ -260,7 +263,7 @@ test("retrieveWeatherData will display an alert if given an incorrect quarter va
     
     
     
-    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput);
+    await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, {}, setWeatherData, setSearchOutput, authHeader);
     
     expect(window.alert).toHaveBeenCalled();
 });

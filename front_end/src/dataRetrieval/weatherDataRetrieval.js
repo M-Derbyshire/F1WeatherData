@@ -6,13 +6,14 @@ import retrieveF1DataObject from './seperateDataRetrievers/retrieveF1DataObject'
 import retrieveWeatherStationID from './seperateDataRetrievers/retrieveWeatherStationID';
 import retrieveWeatherByStationDateTime from './seperateDataRetrievers/retrieveWeatherByStationDateTime';
 import getErrorDataObject from './getErrorDataObject';
+import postDataToLocalAPI from '../dataPersistence/postDataToLocalAPI';
 
 //Requires: the year for the data that is requested; the quarter (1, 2, 3 or 4) of 
 //the season for the request; the apiSettings hook;
 //state value (or null if not yet set) and set-function; the weatherData 
 //hook state value, and its set-function; the set-function for the search
-//output state.
-export default async function retrieveWeatherData(year, quarter, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput)
+//output state; the authHeader value, to authorise requests to the local API
+export default async function retrieveWeatherData(year, quarter, passedApiSettings, setApiSettings, weatherData, setWeatherData, setSearchOutput, authHeader)
 {
 	const roundCountPerQuarter = 6; //How many races in the first 3 quarters?
 	
@@ -87,13 +88,30 @@ export default async function retrieveWeatherData(year, quarter, passedApiSettin
             //(Returns null instead of an empty object, as that's actually recieved as undefined.)
             const raceWeatherData = await retrieveWeatherByStationDateTime(f1DataWithStations[i].stationID, 
                 f1DataWithStations[i].raceDate, f1DataWithStations[i].raceTime, apiSettings.meteostat_API_key);
-            
+			
             newF1WeatherData.push({
                 ...f1DataWithStations[i],
                 weather: (raceWeatherData !== null) ? raceWeatherData : {} //Return empty object if no data
             });
         }
         
+		
+		
+		//If we successfully got new data, we want to send it to the local API.
+		if(authHeader && apiSettings.local_api_base_address)
+		{
+			try
+			{
+				await postDataToLocalAPI(newF1WeatherData, authHeader, apiSettings.local_api_base_address);
+			}
+			catch(err)
+			{
+				//We don't really want to bother the user with this error.
+				console.log(err.message);
+			}
+			
+		}
+		
         //Finally, set the weatherData and searchOutput
         setWeatherData([
             ...weatherData,

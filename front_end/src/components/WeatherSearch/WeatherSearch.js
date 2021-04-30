@@ -17,7 +17,8 @@ function WeatherSearch(props)
 				weatherDataState={weatherResultsStates.weatherDataState} 
 				setSearchResultState={weatherResultsStates.searchResultDataState[1]} 
 				setIsRetrievingDataState={weatherResultsStates.isRetrievingDataState[1]}
-				apiSettingsState={props.apiSettingsState}
+				apiSettingsState={props.apiSettingsState} 
+				authHeader={props.authHeader}
 			/>
 
 			<ResultContainer>

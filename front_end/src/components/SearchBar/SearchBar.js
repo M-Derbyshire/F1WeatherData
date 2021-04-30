@@ -3,6 +3,7 @@ import './SearchBar.css';
 import retrieveWeatherData from '../../dataRetrieval/weatherDataRetrieval';
 
 // Props: 
+// authHeader - the header to be used for authorising calls to the local API
 // weatherDataState - array of the state and set-state-function for the weatherData
 // setSearchResultState - set-state-function for the displayed data after a search/filter
 // setIsRetrievingDataState - set-state-function for a bool value, to be made true when the retrieval is running, 
@@ -18,6 +19,9 @@ function SearchBar(props)
     
     //The data returned from the last search (not the full list of loaded data)
     const setSearchResultData = props.setSearchResultState;
+	
+	//Used to authorise requests on the local API
+	const authHeader = props.authHeader;
     
     //Form inputs names/IDs. Setting name here, as used in the rendered output.
     const yearInputName = "yearInput";
@@ -28,7 +32,7 @@ function SearchBar(props)
         props.setIsRetrievingDataState(true);
 		const year = document.getElementById(yearInputName).value;
 		const quarter = parseInt(document.getElementById(quarterInputName).value);
-        await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData);
+        await retrieveWeatherData(year, quarter, apiSettings, setApiSettings, weatherData, setWeatherData, setSearchResultData, authHeader);
         props.setIsRetrievingDataState(false);
     }
     

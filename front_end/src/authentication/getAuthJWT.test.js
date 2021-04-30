@@ -49,6 +49,7 @@ test("getAuthJWT will throw an error if it receives a bad status (not a 403)", a
 	try
 	{
 		await getAuthJWT("test", "test", "/");
+		fail("Should not reach here");
 	}
 	catch(e)
 	{

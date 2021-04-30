@@ -36,7 +36,11 @@ function App() {
 				
 				<Switch>
 					<Route exact path="/">
-						<WeatherSearch weatherResultsStates={weatherResultsStatesData} apiSettingsState={apiSettingsState} />
+						<WeatherSearch 
+							weatherResultsStates={weatherResultsStatesData} 
+							apiSettingsState={apiSettingsState} 
+							authHeader={authHeaderState[0]}
+						/>
 					</Route>
 					
 					<Route exact path="/about">
